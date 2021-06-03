@@ -13,8 +13,7 @@ import org.springframework.ui.Model;
  * 각 클래스에 sterotype을 부착하는순간 spring에게 
  * 이 컨테이너에 보관해달라고 요청하는것
  * 이 클래스들을 객체로 생성하여 보관하고 있어달라
- * 
- */
+ *  */
 
 @Controller
 @Service
