@@ -6,20 +6,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
 @Getter
+@Setter
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class AuthorVO {
 	
-	private String au_code;
-	private String au_name;
-	private String au_tel;
-	private String au_addr;
-	private String au_genre;
+	private String au_code;//	CHAR(5)
+	private String 	au_name;//	VARCHAR(50)
+	private String au_tel;//	VARCHAR(20)
+	private String au_addr;//	VARCHAR(125)
+	private String au_genre;//	VARCHAR(30)
 
-		
-		
 
 }
