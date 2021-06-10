@@ -22,17 +22,14 @@
 	</beans:bean>
 	
 	<!-- 
-	base-package에 하위 package를 추가하기 
-	클래스를 scan하여 bean으로 만들때 
-	base-package 를 제한하여 서버 Run이 조금이나마
-	빨리 진행되도록 하기위한 조치
-	-->
-	<context:component-scan 
-		base-package="com.callor.jdbc.controller" />
-	<context:component-scan 
-		base-package="com.callor.jdbc.service" />
-	<context:component-scan 
-		base-package="com.callor.jdbc.pesistance" />
+	base-package에 하위 package를 추가하기
+	클래스를 scan하여 bean으로 만들때 base-package 를 제한하여 서버 Run이 조금이나마 빨리 진행되도록 하기 위한 조치
+	 -->
+	 <!-- 폴더 이름 확인  -->
+	<context:component-scan base-package="com.callor.jdbc.controller" />
+	<context:component-scan base-package="com.callor.jdbc.service" />
+	<context:component-scan base-package="com.callor.jdbc.pesistance" />
+	
 	
 	
 </beans:beans>
