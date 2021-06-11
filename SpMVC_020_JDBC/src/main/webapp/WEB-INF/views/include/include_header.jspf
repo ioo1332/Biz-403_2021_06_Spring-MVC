@@ -8,6 +8,7 @@
 	margin: 0;
 	padding: 0;
 }
+
 header {
 	background-color: green;
 	color: white;
@@ -48,7 +49,11 @@ nav#main_nav li {
 nav#main_nav li:first-child {
 	margin-left: 15px;
 }
-
+/* flex item의 특정한 요소의 margin-left auto로 지정하면 해당요소부터
+	오른쪽으로 밀리는 layout을 만들수있다 */
+nav#main_nav li:nth-of-type(5) {
+	margin-left: auto;
+}
 nav#main_nav li:hover {
 	background-color: #999;
 	cursor: pointer;
@@ -78,16 +83,14 @@ section#ad_sec article:nth-of-type(4) {
 section#ad_sec article:nth-of-type(5) {
 	background: url("${rootPath}/static/images/ad_05.jpg") no-repeat;
 }
-
 </style>
 <script>
 	// jsp의 el tag의 변수를 js 변수로 다시 선언하기
 	// var 전역변수, 위치에 관계없이 어디서나 읽을 수 있는변수
 	// var rootPath = "/jdbc"
 	var rootPath = "${rootPath}";
-	
 </script>
-<script src="${rootPath}/static/js/main_nav.js?ver=2021-06-10-003"></script>
+<script src="${rootPath}/static/js/main_nav.js?ver=2021-06-10-005"></script>
 <header>
 	<h1>도서정보 관리 2021</h1>
 	<p>빛고을 총판 도서관리 시스템 2021 v1</p>
