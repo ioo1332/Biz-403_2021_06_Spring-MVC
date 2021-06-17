@@ -1,4 +1,4 @@
-package com.callor.jdbc.pesistance.impl;
+package com.callor.jdbc.service.impl;
 
 import org.springframework.stereotype.Service;
 

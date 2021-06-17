@@ -9,9 +9,7 @@
 <meta charset="UTF-8">
 <title>도서정보 관리 2021</title>
 <%@ include file="/WEB-INF/views/include/include_header.jspf" %>
-
 <body>
-	
 	<section id="main_sec">
 		<article>
 			<h3>출판사</h3>
@@ -50,7 +48,6 @@
 		<article></article>
 		<article></article>
 		<article></article>
-		
 	</section>
 	
 	

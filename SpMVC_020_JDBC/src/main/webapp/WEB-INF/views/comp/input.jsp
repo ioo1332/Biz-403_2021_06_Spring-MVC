@@ -61,6 +61,7 @@ form input:hover {
 <%@ include file="/WEB-INF/views/include/include_head.jspf"%>
 <body>
 <%@ include file="/WEB-INF/views/include/include_header.jspf"%>
+	<section class="main_sec">
 	<h1>출판사 정보 등록</h1>
 	<form method="POST">
 	<fieldset>
@@ -78,6 +79,7 @@ form input:hover {
 		</div>
 		</fieldset>
 	</form>
+	</section>
 	<script>
 	    // const : 상수를 선언하는 키워드
 	    // 		코드가 진행되는 동안 값이 변경되면 안되는 것
@@ -100,6 +102,6 @@ form input:hover {
 			}
 		})
 	</script>
-	
+	<%@ include file="/WEB-INF/views/include/include_footer.jspf"%>
 </body>
 </html>
