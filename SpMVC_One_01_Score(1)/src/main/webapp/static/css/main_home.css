@@ -1,0 +1,22 @@
+@charset "UTF-8";
+ 	  
+table, th, td {    
+border: 1px solid black;  
+margin: 10px auto;
+border-collapse: collapse;  
+
+width: 1000px;  
+text-align: center;  
+font-size: 15px;  
+}
+table#top{
+	background-color: gray;
+	padding: 10px 10px;
+}    
+
+
+ 
+
+
+				
+
