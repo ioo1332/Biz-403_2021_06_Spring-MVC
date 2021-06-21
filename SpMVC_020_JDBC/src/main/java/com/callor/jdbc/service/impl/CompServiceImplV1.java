@@ -1,5 +1,7 @@
 package com.callor.jdbc.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.callor.jdbc.model.CompVO;
@@ -24,7 +26,7 @@ public class CompServiceImplV1 implements CompService{
 		String cpCode=compDao.findByMaxCode();
 		log.debug("Cpcode {}",cpCode);
 		if(cpCode==null || cpCode.equals("")) {
-			// C0001문자열 만들기
+			// C0001문자열 자동으로 만들기
 			cpCode=String.format("C%04d",1);
 		}else {
 			//영문 접두사 C를 자르고 숫자만 추출
@@ -38,5 +40,30 @@ public class CompServiceImplV1 implements CompService{
 		compDao.insert(vo);
 		return 0;
 	}
+
+	@Override
+	public List<CompVO> findByCName(String cp_name) {
+		// TODO Auto-generated method stub
+		// 전달받은 출판사 이름에서 앞뒤의 빈칸을 제거하고
+		// Dao에게 Toss 한후 출판사 리스트를 받아 다시 return
+		return compDao.findByCName(cp_name.trim());
+		
+		
+	}
+
+	@Override
+	public List<CompVO> selectAll() {
+		// TODO Auto-generated method stub
+		return compDao.selectAll();
+	}
+
+	@Override
+	public CompVO findByCCode(String cp_code) {
+		// TODO Auto-generated method stub
+		return compDao.findById(cp_code.trim());
+	}
+
+	
+	
 
 }

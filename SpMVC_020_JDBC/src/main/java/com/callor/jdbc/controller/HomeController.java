@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.callor.jdbc.model.HomeService;
 import com.callor.jdbc.service.RentService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +34,13 @@ public class HomeController {
 	 * 다음의 코드를 권장한다.
 	 */
 	// protected final BookDao bookDao;
+	
 	protected final RentService rentService;
-	public HomeController(RentService rentService) {
+	protected final HomeService homeService;
+	
+	public HomeController(RentService rentService, HomeService homeService) {
 		this.rentService = rentService;
+		this.homeService = homeService;
 	}
 	
 	/*
@@ -66,6 +71,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+		homeService.dashBoard(model);
 		
 		/*
 		 * 매개변수로 전달받은 Model class type변수인 model에

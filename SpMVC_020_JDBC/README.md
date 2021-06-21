@@ -55,7 +55,7 @@ add(num1,num2)
 * spring container는 controller를 bean을 생성할때 각 함수의 시그니처에 맞도록 호출 코드를 생성해둔다  
 void add(int num1,int num2), void add(String s1,String S2)  
 * 매개변수에 설정되는 클래 타입 변수중 일부는 함수내에서 값을 변화 (add,set,remove,clear)를 수행하면 
-변수의 값이 변화되었다는것을 Spring Container가 인지하고 적절하게 반응한다.
+변수의 값이 변화되었다는것을 Spring Container가 인지하고 적절하게 반응한다.  
 *그러한 클래스형 변수중 대표적으로 Model,httpSession등이 있다
 
 # HTTP Protocol Web Service의 Session  

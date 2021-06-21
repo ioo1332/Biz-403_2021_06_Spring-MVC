@@ -1,16 +1,19 @@
 @charset "UTF-8";
+
 * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 }
-body{
-	display:flex;
-	flex-direction:column;
+
+body {
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 	height: 100vh;
 }
-section.main_sec{
+
+section.main_sec {
 	flex:auto;
 	overflow: auto;
 }
@@ -23,15 +26,23 @@ header {
 	padding: 2rem;
 }
 
-/* style 지정을할때 tag에 id나 class를 부착하지않고 지정하는경우
-	1.현재 main_layout.css 파일은 모든 jsp에서 공통으로 include
+/*
+style지정을 할때
+
+tag에 id나 class를 부착하지 않고 지정하는 경우
+1. 현재 main_layout.css 파일은 모든 jsp에서 공통으로 include
 	모든 jsp에 있는 table에 공통으로 속성이 적용된다
-	2. 만약 특정한 jsp파일에서만 table tag에 속성을 부여하고 싶으면
-	table tag에 id나 class를 지정하고 
-	table#id, table.class형식으로 style을 지정해야한다
-	3. 전체 프로젝트의 view를 일관되게 구현하고자 할때 대표적인 tag에 
-	style을 지정하고 include하여 사용하는 방법
+	
+2. 만약 특정한 jsp 파일에서만 table tag에 속성을 부여하고 싶으면
+	table tag에 id나 class 를 지정하고
+	table#id, table.class 형식으로 style을 지정해야 한다
+
+3. 전체 프로젝트의 view를 일관되게 구현하고자 할때
+	대표적인 tag에 style을 지정하고
+	include 하여 사용하는 방법
+	
 */
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -46,7 +57,19 @@ table th, td {
 
 table td {
 	margin-left: 30px;
-	text-align: center;
+	text-align: left;
+	padding-left:10px;
+	
+	max-width:0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* td에 마우스 hover되면 ellipsis를 해제하여 text를 그대로 보여주기 */
+table td:hover {
+	overflow: visible;
+	text-overflow: inherit;
 }
 
 table tr:last-child td {
@@ -93,14 +116,47 @@ button.btn_save {
 	color: white;
 }
 button.btn_reset {
-	background-color: orange;
+	background-color: green;
 	color: white;
 }
 button.btn_list {
-	background-color: green;
+	background-color: orange;
 	color: white;
 }
 button.btn_delete {
 	background-color: red;
 	color: white;
 }
+
+div#modal {
+	position: fixed;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	background-color: black;
+	opacity: 0.5;
+	z-index: 100;
+	display: none;
+}
+div#modal span {
+	position: absolute;
+	display: inline-block;
+	top:30px;
+	right: 30px;
+	font-size: 30px;
+	color:white;
+	font-weight: 900;
+	border-radius: 50%;
+	padding:10px 20px;
+	transition:0.6s
+}
+
+div#modal span:hover {
+	background-color: white;
+	cursor: pointer;
+}
+
+
+
+

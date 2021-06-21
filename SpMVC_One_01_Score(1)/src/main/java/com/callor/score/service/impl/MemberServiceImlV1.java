@@ -1,8 +1,13 @@
 package com.callor.score.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.callor.score.model.StudentVO;
 import com.callor.score.service.MemberService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Service
 public class MemberServiceImlV1 implements MemberService{
 
 	@Override

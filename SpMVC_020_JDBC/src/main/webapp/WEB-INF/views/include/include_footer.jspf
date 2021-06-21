@@ -17,3 +17,6 @@ address {
 <footer>
 	<address>CopyRight &copy; ioo168400@gmail.com</address>
 </footer>
+<div id="modal">
+		<span>x</span>
+	</div>
