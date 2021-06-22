@@ -38,4 +38,13 @@ public class AuthorServiceImplV1 implements AuthorService{
 		return null;
 	}
 
+	@Override
+	public List<AuthorVO>  findByNameAndTel(String au_text) {
+		// TODO Auto-generated method stub
+		List<AuthorVO>nameList=auDao.findByAName(au_text);
+		List<AuthorVO>tellList=auDao.findByATel(au_text);
+		nameList.addAll(tellList);
+		return null;
+	}
+
 }

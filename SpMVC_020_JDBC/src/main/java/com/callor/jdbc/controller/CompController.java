@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.callor.jdbc.model.CompVO;
 import com.callor.jdbc.pesistance.CompDao;
@@ -35,18 +36,28 @@ public class CompController {
 			model.addAttribute("MSG","LOGIN");
 			return "redirect:/member/login";
 		}
-		List<CompVO> compList=compService.selectAll();
-		log.debug("출판사정보가저오기:{}",compList.toString());
-		model.addAttribute("COMPS",compList);
-				
-		return "comp/list";
-	}
-	@RequestMapping(value="/list",method=RequestMethod.GET)
-	public String getList(Model model) {
-		List<CompVO>compList=compService.selectAll();
-		model.addAttribute("COMPS",compList);
-		return "comp/list";
 		
+		List<CompVO> compList = compService.selectAll();
+		log.debug("출판사 정보 가져오기: {} ", compList.toString());
+		model.addAttribute("COMPS",compList);
+		return "comp/list";
+	
+	}
+
+	@RequestMapping(value="/search",method=RequestMethod.GET)
+	public String getList(
+			@RequestParam(name="cp_title",required = false, defaultValue = "")
+			String searchText, Model model) {
+		
+		List<CompVO> compList = null;
+		if(searchText == null || searchText.trim().equals("")) {
+			compList = compService.selectAll();
+		} else {
+			compList = compService.findByTitleAndCeoAndTel(searchText);
+		}
+		model.addAttribute("COMPS",compList);
+		
+		return "comp/search";
 	}
 	
 	// localhost:8080/jdbc/comp/insert로 호출되는 함수

@@ -13,16 +13,21 @@
 	<section class="main_sec">
 		<table>
 			<tr>
-				<th>ISBN</th>
-				<th>도서명</th>
-				<th>출판사</th>
-				<th>저자</th>
-				<th>출판연도</th>
-				<th>가격</th>
-				<th>페이지수</th>
-			</tr>
+				<td>${ST.index}
+				<th>${Book.bk_Isbn}</th>
+				<th>${Book.bk_title}</th>
+				<th>${Book.bk_ccode}</th>
+				<th>${Book.bk_aacode}</th>
+				<th>${Book.bk_date}</th>
+				<th>${Book.bk_pages}</th>
+				<th>${Book.bk_price}</th>
 
-			
+			</tr>
+			<c:choose></c:choose>
+				<c:when test="${empty BOOKS}" ><tr><td colspan="7">데이터가 없음</td></tr></c:when>
+				<c:otherwise>
+				<c:forEach items="${BOOKS }"var="BOOK" varStatus="ST">
+
 			<tr>
 				<td>ISBN</td>
 				<td>도서명</td>
@@ -32,6 +37,10 @@
 				<td>가격</td>
 				<td>페이지수</td>
 			</tr>
+			</c:forEach>
+			
+			</c:otherwise>
+			
 		</table>
 
 		<div class="btn_box">

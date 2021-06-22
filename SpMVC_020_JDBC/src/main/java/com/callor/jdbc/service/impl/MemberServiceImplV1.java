@@ -31,7 +31,7 @@ public class MemberServiceImplV1 implements MemberService{
 	}
 
 	@Override
-	public UserVO viewInfo(String username) {
+	public UserVO viewInfo(String username) {	
 		// TODO Auto-generated method stub
 		return null;
 	}

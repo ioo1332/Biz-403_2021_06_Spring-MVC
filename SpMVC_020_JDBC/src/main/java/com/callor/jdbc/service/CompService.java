@@ -14,4 +14,5 @@ public interface CompService {
 	public List<CompVO> findByCName(String cp_name);
 	public List<CompVO> selectAll();
 	public CompVO findByCCode(String cp_code);
+	public List<CompVO> findByTitleAndCeoAndTel(String text);
 }

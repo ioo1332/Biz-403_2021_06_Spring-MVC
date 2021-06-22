@@ -31,4 +31,10 @@ public class BookServiceImplV1 implements BookService {
 		return bookDao.selectAll();
 	}
 
+	@Override
+	public Integer insert(BookVO bookVO) {
+		// TODO Auto-generated method stub
+		return bookDao.insert(bookVO);
+	}
+
 }

@@ -114,7 +114,7 @@ public class CompDaoImplV1 implements CompDao{
 		// TODO Auto-generated method stub
 		String sql=" SELECT *FROM tbl_company ";
 		//WHERE cp_code LIKE '%'||'%'// ORACLE
-		sql+=" WHERE cp_name LIKE CONCAT('%',? '%')";
+		sql+=" WHERE cp_title LIKE CONCAT('%',? '%')";
 		// select를 수행한후 각각의 데이터를 CompVO에 담고
 		// List 에 add하여 return 한후 compList에 받기 
 		List<CompVO>compList=jdbcTemplate.query(sql, new Object[] {cname},
@@ -126,13 +126,27 @@ public class CompDaoImplV1 implements CompDao{
 	@Override
 	public List<CompVO> findByTel(String tel) {
 		// TODO Auto-generated method stub
-		return null;
+		String sql=" SELECT *FROM tbl_company ";
+
+		sql+=" WHERE cp_tel LIKE CONCAT('%',? '%')";
+
+		List<CompVO>compList=jdbcTemplate.query(sql, new Object[] {tel},
+				new BeanPropertyRowMapper<CompVO>(CompVO.class));
+		
+		return compList;
+
 	}
 
 	@Override
 	public List<CompVO> findByCeo(String ceo) {
-		// TODO Auto-generated method stub
-		return null;
+		String sql=" SELECT *FROM tbl_company ";
+
+		sql+=" WHERE cp_ceo LIKE CONCAT('%',? '%')";
+
+		List<CompVO>compList=jdbcTemplate.query(sql, new Object[] {ceo},
+				new BeanPropertyRowMapper<CompVO>(CompVO.class));
+		
+		return compList;
 	}
 	/* tbl_company table 에서 cpcode(출판사코드)중 
 	 * 가장 큰 값을 추출하기

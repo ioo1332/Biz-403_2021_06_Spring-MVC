@@ -31,9 +31,9 @@ public class MemberController {
 		if(msg == null) {
 			model.addAttribute("MSG","NONE");
 		} else if(msg.equals("LOGIN")) {
-			model.addAttribute("MSG","권한없음 로그인 수행");
+			model.addAttribute("MSG","권한없음 로그인 수행!!!");
 		} else if(msg.equals("LOGIN_FAIL")) {
-			model.addAttribute("MSG","아이디 비번 확인");
+			model.addAttribute("MSG","아이디 비번 확인 !!!");
 		}
 		return "member/login";
 	}
