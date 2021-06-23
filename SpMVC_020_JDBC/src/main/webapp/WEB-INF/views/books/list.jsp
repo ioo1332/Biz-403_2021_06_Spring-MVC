@@ -14,13 +14,13 @@
 		<table>
 			<tr>
 				<td>${ST.index}
-				<th>${Book.bk_Isbn}</th>
-				<th>${Book.bk_title}</th>
-				<th>${Book.bk_ccode}</th>
-				<th>${Book.bk_aacode}</th>
-				<th>${Book.bk_date}</th>
-				<th>${Book.bk_pages}</th>
-				<th>${Book.bk_price}</th>
+				<td>${Book.bk_Isbn}</td>
+				<td><sapn><label class="truncate">${Book.bk_title}</label></sapn></td>
+				<td><sapn><label class="truncate">${Book.bk_ccode}</label></sapn></td>
+				<td><sapn><label class="truncate">${Book.bk_aacode}</label></sapn></td>
+				<td>${Book.bk_date}</td>
+				<td>${Book.bk_pages}</td>
+				<td>${Book.bk_price}</td>
 
 			</tr>
 			<c:choose></c:choose>
