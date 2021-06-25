@@ -24,6 +24,7 @@ public class ScoreController {
 	@RequestMapping(value={"/",""},method=RequestMethod.GET)
 	public String scoreList(Model model) {
 		List<ScoreDTO>scoreList=scService.scoreAllList();
+		log.debug("Score {} ", scoreList.toString());
 		model.addAttribute("SCORES",scoreList);
 		
 		model.addAttribute("BODY","SCORE_VIEW");
