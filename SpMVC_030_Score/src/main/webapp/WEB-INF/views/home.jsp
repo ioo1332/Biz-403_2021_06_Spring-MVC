@@ -34,6 +34,38 @@ header {
 	color: white;
 	padding: 2rem;
 }
+nav{
+	background-color: black;
+	color: white;
+	width: 100%;
+}
+nav.fixed{
+	position: fixed;
+	top:0;
+	left:0;
+	right:10px;
+	border-bottom-right-radius: 20px; 
+	box-shadow: 3px 3px 3px rgba(0,0,0,0,0.5);
+	trantition:1s;
+}
+nav ul{
+	list-style: none;
+	display: flex;
+	margin:0 20px;
+	cursor: pointer;
+}
+nav li{
+	padding: 16px 12px;
+	border-bottom: 3px solid transrarnet;
+	trantition:1s;
+	cursor: pointer;
+}
+nav li:hover{
+	border-bottom: 3px solid yellow;
+}
+nav li:nth-of-type(2){
+	margin-left: auto;
+}
 section#main_sec{
 	flex:1;
 	width: 100wv;
@@ -42,7 +74,14 @@ section#main_sec{
 	background: linear-gradient(to bottom,green,red);
 	background-size: 100% 100%;
 	background-attachment: fixed;
+	/*
+	header와 nav를 화면에 고정하고
+	data가 보이는 부분만 scroll하기 위하여
+	section#main_sec 에 overflow속성부여하기
+	overflow: auto;
+	*/
 }
+
 h2{
 	widows: 90%;
 	color: white;
@@ -175,6 +214,14 @@ button.student.list{
 		<h1>대한고교성적처리</h1>
 		<p>대한고교 성적처리 시스템 2021</p>
 	</header>
+	<nav id="main_nav"> 
+		<ul>
+			<li>HOME</li>
+			<li>로그인</li>
+			<li>로그아웃</li>
+			<li>관리자</li>
+		</ul>
+	</nav>
 	<section id="main_sec">
 		<c:choose>
 			<c:when test="${BODY eq'SCORE_VIEW' }">
@@ -240,6 +287,29 @@ let table= document.querySelector("table.detail")
 	})
 	
 }
+let main_nav=document.querySelector("nav#main_nav")
+let main_header=document.querySelector("header")
+// header box높이가 얼마냐
+let main_header_height=main_header.offsetHeight;
+document.addEventListener("scroll",()=>{
+	//html문서 전체의 크기 좌표등을 추출하기
+	let doc_bound=document.querySelector("HTML").getBoundingClientRect();
+	let doc_top=doc_bound.top
+	/* 화면이 아래방향으로 스크롤 될때 화면 문서의 top좌표를 추출하여
+		header box의 높이와 비교
+		header box의 높이에 -1을 곱하고 그값보다 작아지면
+		=== header box가 화면에서 사라지면
+		nav에 fixed라는 class를 부착하고 ==header box가 화면에서 나타나면
+		nav에 fixed class를 제거하여 원래 모습으로 다시 보이기
+	*/
+	
+	if(doc_top<main_header_height*-1){
+		main_nav.classList.add("fixed")
+	}else{
+		main_nav.classList.remove("fixed")
+	}
+	
+})
 
 	
 </script>

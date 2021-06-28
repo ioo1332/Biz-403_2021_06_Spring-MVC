@@ -4,15 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.callor.score.model.ScoreInputVO;
 import com.callor.score.model.StudentVO;
-import com.callor.score.model.SubjectAndScoreDTO;
-import com.callor.score.service.ScoreService;
 import com.callor.score.service.StudentService;
 
 import lombok.RequiredArgsConstructor;
@@ -66,12 +62,23 @@ public class StudentController {
 //	public String detail(
 //			@RequestParam(name="subject")List<String>subject,
 	//		@RequestParam(name="score")List<String>score) {
-	public String detail(ScoreInputVO scInputVO) {
+	public String detail(ScoreInputVO scInputVO,Model model) {
 		//log.debug("Subject:{}",subject.toString());
 		//log.debug("score:{}",score.toString());
 		log.debug("Score Input{}",scInputVO.toString());
 		String ret=stService.scoreInput(scInputVO);
-		return "home";
+		String st_num=scInputVO.getSt_num();
+		/*
+		 * redirect를 수행할때 query string 을 보내고 싶으면
+		 * 해당 변수와 값을 model에 속성(attribut)로 추가
+		 * 
+		 * redirect:/student/detail?st_num="+st_num
+		 * 같이 사용하지 않아도 된다
+		 */
+		
+		model.addAttribute("st_num",st_num);
+		
+		return "redirect:/student/detail";
 	}
 	
 	
