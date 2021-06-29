@@ -8,5 +8,5 @@ public class NaverSecret_Sample {
 	 *  다음 항목에 작성한후 파일이름을 NaverSecret으로 변경한후 프로젝트를 실행하라
 	 */
 	public static final String NAVER_CLIENT_ID="YOUR NAVER CLIENT ID";
-	public static final String NAVER_CLIENT_SECTRET="YOUR NAVER SECRETE";
+	public static final String NAVER_CLIENT_SECRET="YOUR NAVER SECRETE";
 }
