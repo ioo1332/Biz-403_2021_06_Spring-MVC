@@ -16,27 +16,28 @@ import com.callor.book.service.BookService;
 import com.callor.book.service.NaverAbstractService;
 
 import lombok.RequiredArgsConstructor;
-@Service
 @RequiredArgsConstructor
-public class BookSerivceImplV1 implements BookService{
-	@Qualifier(NaverQualifier.NAVER_BOOK_SERVICEV2)
-	protected NaverAbstractService<BookDTO> nBookService;
+@Service
+public class BookServiceImplV1 implements BookService{
+
+	@Qualifier(NaverQualifier.NAVER_BOOK_SERVICE_V2)
+	protected final NaverAbstractService<BookDTO> nBookService;
 	protected final BookDao bookDao;
 	
 	@Override
 	public int insert(String isbnUTF) throws IOException, ParseException {
-		String isbn=URLDecoder.decode(isbnUTF,"UTF-8");
-		String[] isbns=isbn.split("");
-		isbn=isbns[1];
-		String queryURL=nBookService.queryURL(isbn);
-		String jsonString =nBookService.getJsonString(queryURL); 
-		List<BookDTO>books=nBookService.getNaverList(jsonString);
-		BookDTO book=books.get(0);
-		book.setIsbn(isbn);
-		bookDao.insert(book);
-		return 0;
 		
-	
+		String isbn = URLDecoder.decode(isbnUTF,"UTF-8");
+		String[] isbns = isbn.split(" ");
+		
+		isbn = isbns[1];
+		String queryURL = nBookService.queryURL(isbn);
+		String jsonString = nBookService.getJsonString(queryURL);
+		List<BookDTO> books = nBookService.getNaverList(jsonString);
+		BookDTO book = books.get(0);
+		book.setIsbn(isbn);
+		bookDao.insert(book);		
+		return 0;
 	}
 
 }

@@ -14,23 +14,23 @@ import com.callor.book.service.BookService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-@Slf4j
-@Controller
-@RequestMapping(value="/book")
 @RequiredArgsConstructor
+@Slf4j
+@RequestMapping(value="/book")
+@Controller
 public class BookController {
+
 	
 	protected final BookService bookService;
-	@RequestMapping(value="insert/{isbn}",method=RequestMethod.GET)
-	public String insert(@PathVariable("isbn")String isbn,Model model) throws UnsupportedEncodingException, IOException, ParseException {
-		log.debug("isbn:{}",isbn);
+	
+	@RequestMapping(value="/insert/{isbn}",method=RequestMethod.GET)
+	public String insert(
+			@PathVariable("isbn") String isbn, Model mode) throws IOException, ParseException {
 		
-		int ret=bookService.insert(isbn);
+		log.debug("ISBN : {}",isbn);
 		
+		int ret = bookService.insert(isbn);
 		return "redirect:/naver/BOOK";
-		
-		
-		
 	}
-
+	
 }

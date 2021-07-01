@@ -41,32 +41,38 @@ import lombok.extern.slf4j.Slf4j;
  * 따라서 NaverBookServiceImplV2클래스에는 queryURL(),jsonString(),getNaverList()method가 모두 있는것과 같다.
  */
 @Slf4j
-@Service(NaverQualifier.NAVER_BOOK_SERVICEV2)
-public class NaverBookServiceImplV2 extends NaverBookServiceImplV1 {
-	
-	
-		
-	// gSon을 사용하여 jsonString을 parsing하기
+@Service(NaverQualifier.NAVER_BOOK_SERVICE_V2)
+public class NaverBookServiceImplV2 extends NaverBookServiceImplV1 {@Override
+
+	// gSon 을 사용하여 jsonString을 parsing 하기
 	public List<BookDTO> getNaverList(String jsonString) throws ParseException {
-		log.debug("service2:{}");
-		// 문자열형 JSON인 jsonString을 Json객체로 변환하기
-		JsonElement jsonElement=JsonParser.parseString(jsonString);
+		
+		log.debug("나는 ServiceV2 ~~~");
+	
+		// 문자열형 JSON 인 jSonString을 Json 객체로 변환하기 
+		JsonElement jSonElement = JsonParser.parseString(jsonString);
+		
 		// 필요한 항목만 가져오기
-		JsonElement oItems=jsonElement.getAsJsonObject().get("items");
+		JsonElement oItems = jSonElement
+								.getAsJsonObject()
+								.get("items");
 		
-		Gson gson=new Gson();
-		/* List는 interface인데 interface는 자신의 type을 가지고있지 않는 객체인데
-			Gson을 이용하여 JSON parsing을 할때 List<DTO>구조를 알수있는 방법이 없어서 
-			Gson의 특별한 객체 생성자를 하나 제공해주고
-			이 객체를 통하여 List<DTO>의 구조를 알수있도록 만들어준다
-		*/
-		TypeToken<List<BookDTO>>typeToken=new TypeToken<List<BookDTO>>(){};
+		Gson gson = new Gson();
 		
-		List<BookDTO>bookList=gson.fromJson(oItems, typeToken.getType());
+		/*
+		 *  List는 interface인데 interface는
+		 *  자신의 type을 가지고 있지않는 객체인데
+		 *  Gson을 이용하여 JSON parsing을 할때
+		 *  List<DTO> 구조를 알수있는 방법이 없어서
+		 *  Gson 특별한 객체 생성자를 하나 제공해 주고
+		 *  이 객체를 통하여 List<DTO>의 구조를 알수 있도록 
+		 *  만들어준다  
+		 */
+		TypeToken<List<BookDTO>> typeToken 
+				= new TypeToken<List<BookDTO>>() {} ;
 		
+		List<BookDTO> bookList 
+			= gson.fromJson(oItems, typeToken.getType());
 		return bookList;
-		
-
 	}
-
 }

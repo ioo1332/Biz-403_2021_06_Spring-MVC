@@ -17,30 +17,31 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-@Qualifier(NaverQualifier.NAVER_NEWS_SERVICEV1)
-public class NaverNewsServiceImplV1 extends NaverAbstractService<NewsDTO>{
+@Service(NaverQualifier.NAVER_NEWS_SERVICE_V1)
+public class NaverNewsServiceimplV1 extends NaverAbstractService<NewsDTO> {
 
 	@Override
 	public String queryURL(String search) throws UnsupportedEncodingException {
-		// TODO Auto-generated method stub
-		String queryURL=NaverSecret.NURL.NEWS;
-		queryURL+="?query=%s&display=10";
-		
-		String searchUTF=URLEncoder.encode(search,"UTF-8");
-		queryURL=String.format(queryURL, searchUTF);
-		
-		return null;
+		String queryURL = NaverSecret.NURL.NEWS;
+		queryURL += "?query=%s&display=10";
+
+		String searchUTF = URLEncoder.encode(search, "UTF-8");
+		queryURL = String.format(queryURL, searchUTF);
+		return queryURL;
 	}
 
 	@Override
 	public List<NewsDTO> getNaverList(String jsonString) throws ParseException {
-		// TODO Auto-generated method stub
-		JsonElement jsonElement=JsonParser.parseString(jsonString);
-		JsonElement oItems=jsonElement.getAsJsonObject().get("items");
-		Gson gson=new Gson();
-		TypeToken<List<NewsDTO>> typeToken=new TypeToken<List<NewsDTO>>() {};
-		List<NewsDTO> news=gson.fromJson(oItems,typeToken.getType());
-		return news;
+		JsonElement jsonElement = JsonParser.parseString(jsonString);
+		JsonElement oItems = jsonElement.getAsJsonObject().get("items");
+
+		Gson gson = new Gson();
+		TypeToken<List<NewsDTO>> typeToken 
+				= new TypeToken<List<NewsDTO>>() {
+		};
+
+		List<NewsDTO> movies = gson.fromJson(oItems, typeToken.getType());
+		return movies;
 	}
 
 }
