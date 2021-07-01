@@ -18,8 +18,13 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import com.callor.book.config.NaverSecret;
+import com.callor.book.model.BookDTO;
 import com.callor.book.model.MovieDTO;
 import com.callor.book.service.NaverMovieService;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 @Service("naverMovieServiceV1")
 
@@ -81,15 +86,15 @@ public class NaverMovieServiceImplV1 implements NaverMovieService {
 	@Override
 	public List<MovieDTO> getNaverList(String jsonString) throws ParseException {
 		// TODO Auto-generated method stub
-		JSONParser jParser = new JSONParser();
+		/*JSONParser jParser = new JSONParser();
 		JSONObject jObject = (JSONObject) jParser.parse(jsonString);
 		JSONArray items = (JSONArray) jObject.get("items");
-
+		
 		List<MovieDTO> MovieList = new ArrayList<MovieDTO>();
 		int nSize = items.size();
 		for (int i = 0; i < nSize; i++) {
 			JSONObject item = (JSONObject) items.get(i);
-
+		
 			String title = item.get("title").toString();
 			String link = item.get("link").toString();
 			String image = item.get("image").toString();
@@ -111,5 +116,17 @@ public class NaverMovieServiceImplV1 implements NaverMovieService {
 			MovieList.add(movieDTO);
 		}
 		return MovieList;
+		}
+		*/
+		JsonElement jsonElement=JsonParser.parseString(jsonString);
+		JsonElement oItems=jsonElement.getAsJsonObject().get("items");
+		
+		Gson gson=new Gson();
+	
+		TypeToken<List<MovieDTO>>typeToken=new TypeToken<List<MovieDTO>>(){};
+		
+		List<MovieDTO>movieList=gson.fromJson(oItems, typeToken.getType());
+		
+		return movieList;
 	}
 }
