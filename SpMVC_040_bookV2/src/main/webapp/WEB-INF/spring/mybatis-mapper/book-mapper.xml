@@ -26,9 +26,6 @@
 						#{pubdate}
 				)
  	</insert>
- 	<select id="selectAll" resultType="BookDTO">
- 		SELECT*FROM tbl_books
- 	</select>
  	<update id="update"></update>
  	<delete id="delete"></delete>
  
