@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.callor.book.config.NaverQualifier;
 import com.callor.book.config.NaverSecret;
@@ -18,7 +19,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 @Service(NaverQualifier.NAVER_NEWS_SERVICE_V1)
-public class NaverNewsServiceimplV1 extends NaverAbstractService<NewsDTO> {
+public class NaverNewsServiceImplV1 extends NaverAbstractService<NewsDTO> {
 
 	@Override
 	public String queryURL(String search) throws UnsupportedEncodingException {
