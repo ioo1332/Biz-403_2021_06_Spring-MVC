@@ -22,7 +22,7 @@ import com.google.gson.reflect.TypeToken;
 public class NaverNewsServiceImplV1 extends NaverAbstractService<NewsDTO> {
 
 	@Override
-	public String queryURL(String search) throws UnsupportedEncodingException {
+	public String queryURL(String search) throws Exception {
 		String queryURL = NaverSecret.NURL.NEWS;
 		queryURL += "?query=%s&display=10";
 
@@ -32,7 +32,7 @@ public class NaverNewsServiceImplV1 extends NaverAbstractService<NewsDTO> {
 	}
 
 	@Override
-	public List<NewsDTO> getNaverList(String jsonString) throws ParseException {
+	public List<NewsDTO> getNaverList(String jsonString) throws  Exception {
 		JsonElement jsonElement = JsonParser.parseString(jsonString);
 		JsonElement oItems = jsonElement.getAsJsonObject().get("items");
 
