@@ -14,24 +14,20 @@
 <meta charset="UTF-8">
 <title>나의 홈페이지</title>
 </head>
+<c:choose>
+<c:when test="${BODY=='GA-INPUT'}">
+<%@ include file="/WEB-INF/views/gallery/input.jsp" %>	
+</c:when>
+<c:when test="${BODY eq'GA-LIST'}">
+<%@ include file ="/WEB-INF/views/gallery/list.jsp" %>
+<a href="${rootPath}/gallery/input">이미지등록</a>	
+</c:when>
+<c:otherwise>
+<a href="${rootPath}/gallery/input">이미지등록</a>
+</c:otherwise>
+</c:choose>
 <body>
 
-	<form
-		method="POST"
-		enctype="multipart/form-data">
-		<div>
-			<input
-				type="file"
-				name="one_file">
-		</div>
-		<div>
-			<input
-				type="file"
-				multiple="multiple"
-				name="m_file">
-		</div>
-		<button>전송</button>
-	</form>
 	<c:forEach
 		items="${FILES}"
 		var="FILE">
