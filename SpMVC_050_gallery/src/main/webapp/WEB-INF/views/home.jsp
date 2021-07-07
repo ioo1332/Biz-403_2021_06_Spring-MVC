@@ -10,23 +10,47 @@
 	value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
+<style>
+	h1{
+		text-align: center;
+		background-color: black;
+		color:white; 
+	}
+	
+	div#btn_img {
+		margin:0 auto;
+		text-align: right; 
+		border: 0px ;
+		
+	}
+	button {
+		padding:10px 10px;
+		border-radius: 3px;
+		outline: hidden;
+	}
+</style>
 <head>
 <meta charset="UTF-8">
 <title>나의 홈페이지</title>
 </head>
+<body>
+<h1>갤러리</h1>
 <c:choose>
 <c:when test="${BODY=='GA-INPUT'}">
 <%@ include file="/WEB-INF/views/gallery/input.jsp" %>	
 </c:when>
 <c:when test="${BODY eq'GA-LIST'}">
 <%@ include file ="/WEB-INF/views/gallery/list.jsp" %>
-<a href="${rootPath}/gallery/input">이미지등록</a>	
+<a href="${rootPath}/gallery/input"><div id="btn_img"><button>이미지등록</button></a></div>	
 </c:when>
-<c:otherwise>
+<c:when test="${BODY eq'GA-DETAIL'}">
+<%@ include file="/WEB-INF/views/gallery/detail.jsp" %>
+</c:when>
+<c:otherwise >
 <a href="${rootPath}/gallery/input">이미지등록</a>
 </c:otherwise>
 </c:choose>
-<body>
+
 
 	<c:forEach
 		items="${FILES}"

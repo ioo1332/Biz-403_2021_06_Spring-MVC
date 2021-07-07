@@ -7,7 +7,60 @@
 
 	<select id="selectAll"></select>
 	<select id="findById"></select>
-	<insert id="insert"></insert>
+	<!-- 개별적으로 한개씩 데이터 insert -->
+	<insert id="insert" parameterType="FileDTO">
+		INSERT INTO tbl_files(
+			file_gseq,file_original,file_upname
+			)VALUES(
+			#{file_gseq},#{file_original},#{file_upname}
+			)
+	</insert>
+	<!-- f_seq값이 있는(이미 저장된) 데이터를 추가하려고 할때
+		pk값이 중복되어 내부에서 unique exception이 발생하는데
+		이 exception을 catch하여 update로 전환하는 mysql의 
+		고유 명령어를 사용하여 insert or update를 수행하는방법
+		
+		이 문법을 사용하려면 file_seq데이터를 insert하도록 
+		선행코드가 필요하다
+	-->
+	<insert id="insertOrUpdate" parameterType="FileDTO">
+		INSERT INTO tbl_files(
+			file_seq,file_gseq,file_original,file_upname
+			)VALUES(
+			#{file_seq},#{file_gseq},#{file_original},#{file_upname}
+			)
+			ON DUPLICATE KEY UPDATE
+			file_gseq=#{file_gseq},
+			file_orginal=#{file.original},
+			fiel_upname=#{file.upname}
+	</insert>
+	<!-- List<DTO>에 담긴 데이터를 한꺼번에 insert -->
+	<insert id="insertWithList" parameterType="FileDTO">
+		INSERT INTO tbl_files(
+			file_gseq,file_original,file_upname
+			)VALUES
+			<foreach collection="filesList" item="file" separator=", ">
+			(
+			#{file.file_gseq},#{file.file_original},#{file.file_upname}
+			)
+			</foreach>
+	</insert>
+	<insert id="insertOrUpdateWithList">
+		INSERT INTO tbl_files(
+			file_seq,file_gseq,file_original,file_upname
+			)VALUES
+			<foreach collection="filesList" item="file" separator=", ">
+			(
+			#{file.file_seq},#{file.file_gseq},#{file.file_original},#{file.file_upname}
+			)
+			</foreach>
+			AS NEW(f_seq,f_gseq,f_original,f_upname)
+			ON DUPLICATE KEY UPDATE
+			file_gseq=f_gseq,
+			file_original=f_original,
+			file_upname=f_upname
+	</insert>
+	
 	<update id="update"></update>
 	<delete id="delete"></delete>
 
@@ -15,8 +68,8 @@
 		create table IF NOT EXISTS tbl_files(
 			file_seq BIGINT AUTO_INCREMENT PRIMARY KEY,
 			file_gseq BIGINT NOT NULL ,
-			file_original VARCHAR(125) NOT NULL ,
-			file_upname VARCHAR(125) NOT NULL
+			file_original VARCHAR(256) NOT NULL ,
+			file_upname VARCHAR(256) NOT NULL
 		)
 	</update>
 
