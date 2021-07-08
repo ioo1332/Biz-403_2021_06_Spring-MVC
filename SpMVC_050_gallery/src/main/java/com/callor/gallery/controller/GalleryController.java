@@ -25,6 +25,31 @@ import lombok.extern.slf4j.Slf4j;
 public class GalleryController {
 	
 	protected final GalleryService gaService;
+	
+	/*
+	 * 주소창에 직접 입력후 enter로 요청할때 request처리
+	 * http://localhost:8080/rootPath/gallery/dumy로 요청했을때 request처리
+	 * a tag
+	 * 	<a href="${rootPath}/gallery/dumy>열기</a>
+	 * JS
+	 * location.href="${rootPath}/gallery/dumy"
+	 */
+	@RequestMapping(value="/dumy",method=RequestMethod.GET)
+	public String dumy() {
+		return "home";
+	}
+	/*
+	 * <form action="${rootPath}/dumy" method="POST">
+	 * 		<input name="str">
+	 * 		<button type="submit">전송</butoon>
+	 * <form>
+	 */
+	@RequestMapping(value="/dumy",method=RequestMethod.POST)
+	public String dumy(String str) {
+		return "home";
+	}
+	// localhost:8080/rootPath/gallery/또는
+	// localhost:8080/rootPath/gallery
 	@RequestMapping(value={"/",""},method=RequestMethod.GET)
 	public String list(Model model) throws Exception {
 		
