@@ -23,4 +23,15 @@ public class TipController {
 		return "home";
 	}
 	
+	@RequestMapping(value="/write", method=RequestMethod.POST)
+	public String write() {
+		return "home";
+	}
+	
+	@RequestMapping(value="/read", method=RequestMethod.GET)
+	public String read(Model model) {
+		model.addAttribute("BODY", "READ");
+		return "home";
+	}
+	
 }
