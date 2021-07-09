@@ -10,8 +10,21 @@
 		padding: 2rem;
 		border-radius: 20px;
 	}
+	div#login_box{
+		background-color:lime;
+		border: 1px solid black;
+		margin:30px auto;
+		text-align: center;
+		width: 50%;
+	}
+	label{
+		
+		
+	}
+	
 </style>
 <form method="POST" id="login_form">
+<div id="login_box">
 	<div class="msg login error">
 	
 	</div>
@@ -26,6 +39,7 @@
 	<div>
 		<button type="button" class="login">로그인</button>
 		<button type="button" class="join">회원가입</button>
+	</div>
 	</div>
 </form>
 <script>
@@ -69,10 +83,16 @@ if(login_fail==="NOT_USERID"){
 	//msg_error.style.padding="2rem"
 }else if(login_fail==="NEQ_PASS"){
 	msg_error.innerText="비밀번호가 틀렸습니다"
-		msg_error.classList.add("view")
+	msg_error.classList.add("view")
 	//msg_error.style.fontsize="20px"
 	//msg_error.style.backgroundColor="red"
 	//msg_error.style.padding="2rem"
+}else if(login_fail==="LOGIN_REQ"){
+	msg_error.innerHTML="로그인이 필요한 서비스입니다<br/>"
+	msg_error.innerHTML+="로그인 해주세요"
+	msg_error.classList.add("view")
+	
 }
+	
 
 </script>

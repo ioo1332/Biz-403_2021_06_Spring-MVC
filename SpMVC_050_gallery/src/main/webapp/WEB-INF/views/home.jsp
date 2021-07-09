@@ -48,6 +48,9 @@
 <c:when test="${BODY eq'GA-DETAIL'}">
 <%@ include file="/WEB-INF/views/gallery/detail.jsp" %>
 </c:when>
+<c:when test="${BODY eq'GA-DETAIL-V2'}">
+<%@ include file="/WEB-INF/views/gallery/detail2.jsp" %>
+</c:when>
 <c:when test="${BODY eq'JOIN'}">
 <%@ include file="/WEB-INF/views/member/join.jsp" %>
 </c:when>
@@ -77,7 +80,7 @@ if(main_nav){
 			if(menu.id==="join"){
 				location.href="${rootPath}/member/join"
 			}else if(menu.id==="login"){
-				location.href="${rootPath}/member/login"
+				location.href="${rootPath}/member/login/nav"
 			}else if(menu.id==="logout"){
 				location.href="${rootPath}/member/logout"
 			}else if(menu.id==="image_create"){

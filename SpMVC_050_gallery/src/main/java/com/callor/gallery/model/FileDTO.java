@@ -21,5 +21,7 @@ public class FileDTO {
 	private Long file_gseq;//	BIGINT	NOT NULL	
 	private String file_original;//	VARCHAR(125)	NOT NULL	
 	private String file_upname;//	VARCHAR(125)	NOT NULL	
+	
+	
 
 }

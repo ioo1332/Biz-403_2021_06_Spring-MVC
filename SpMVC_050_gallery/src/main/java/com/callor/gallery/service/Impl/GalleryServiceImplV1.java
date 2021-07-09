@@ -36,7 +36,7 @@ public class GalleryServiceImplV1 implements GalleryService{
 	 * Spring framework는 변수를 초기화 method를 실행하여 또 변수초기화 
 	 * 이미 생성되어 준비된 객체에 주입등을 수행한다
 	 */
-	@Autowired
+	//@Autowired
 	public void create_table(GalleryDao gDao) {
 		Map<String,String> maps =new HashMap<String,String>();
 		gaDao.create_table(maps);
@@ -98,9 +98,31 @@ public class GalleryServiceImplV1 implements GalleryService{
 	@Override
 	public List<GalleryFilesDTO> findByIdGalleryFiles(Long g_seq) {
 		// TODO Auto-generated method stub
+		List<GalleryFilesDTO>gfList=gaDao.findByIdGalleryFiles(g_seq);
+		/*
+		 * dao로부터 select를 한후 데이터 검증 하기 위해 사용하는 코드
+		 * gflist가 데이터가 조회되지않아 null이 발생할수있다
+		 */
+		if(gfList!=null&&gfList.size()>0) {
+			log.debug(gfList.toString());
+		}else {
+			log.debug("조회된 데이터가 없음");
+		}
+		log.debug(gfList.toString());
+		return gfList;
 		
-		return gaDao.findByIdGalleryFiles(g_seq);
-		
+	}
+
+	@Override
+	public GalleryDTO findByIdGallery(Long g_seq) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int delete(Long g_seq) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

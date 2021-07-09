@@ -33,11 +33,16 @@
 <c:forEach items="${GALLERYS}" var="GALLERY">
 <div class="ga_box">
 	<div id="ga_box1" >
-		<img src="${rootPath}/files/${GALLERY.g_image}" width="100px">
+	<c:if test="${empty GALLERY.g_image }">
+		<img src ="${rootPath }/files/noimage.png" width="50px"/>
+	</c:if>
+	<c:if test="${not empty GALLERY.g_image}">
+		<img src="${rootPath}/files/${GALLERY.g_image}" width="50px">
+	</c:if>
 	</div>
 	<div id="ga_box2">
 		<h3>
-		제목 : <a href="${rootPath}/gallery/detail/${GALLERY.g_seq}">
+		제목 : <a href="${rootPath}/gallery/detail2/${GALLERY.g_seq}">
 		${GALLERY.g_subject}</a></h3>
 		<p>내용 : ${GALLERY.g_content}</p>
 	</div>
