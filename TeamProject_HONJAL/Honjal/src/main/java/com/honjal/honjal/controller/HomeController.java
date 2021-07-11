@@ -30,20 +30,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/read", method = RequestMethod.GET)
-	public String read(Model model,HttpServletRequest hsRequest,
-			HttpSession session,HttpServletResponse hsResponse) {
-		// 로그인 여부
-		MemberVO memVO=(MemberVO) session.getAttribute("MEMBER");
-		if(memVO==null) {
-			return "/join";
-		}
-		// 
-		
-		
-		model.addAttribute("BODY", "READ");
-		return "home";
-	}
 	
 	@RequestMapping(value = "/scrap", method = RequestMethod.GET)
 	public String scrap(Model model) {

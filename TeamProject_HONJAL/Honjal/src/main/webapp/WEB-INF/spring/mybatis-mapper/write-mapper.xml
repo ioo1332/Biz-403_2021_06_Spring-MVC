@@ -5,4 +5,12 @@
   
  <mapper namespace="com.honjal.honjal.dao.ext.ContentDao">
  
+ 
+  <!-- 게시판 조회수 -->
+    <update id="board_Count" parameterType="int">
+    	UPDATE tbl_contnet SET
+    	borad_count = borad_count+1
+    	WHERE content_num = #{content_num}
+    </update>
+ 
  </mapper>

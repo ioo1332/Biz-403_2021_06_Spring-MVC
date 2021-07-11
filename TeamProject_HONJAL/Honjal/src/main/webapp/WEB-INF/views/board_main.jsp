@@ -73,11 +73,17 @@
 	          	</th>
 	    	</c:when>
           </c:choose>
-          
           <th width="40%">글제목</th>
           <th width="15%">작성자</th>
           <th width="10%">작성일</th>
           <th width="5%">조회</th>
+          <c:forEach items="${list}" var = "list">
+							<tr>
+								<td><c:out value="${list.read_count}" /></td>
+							</tr>
+						</c:forEach>
+						
+					
           <c:choose>
 	    	<c:when test="${MENU == 'TIP' || MENU == 'INTERIOR' || MENU == 'REVIEW'}">
 		    	<th width="5%">추천</th>

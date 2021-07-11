@@ -16,6 +16,9 @@ public interface ContentService {
 	public int delete(int content_num) throws Exception;
 	// 글삭제
 	
+	// 글 조회
+	public ContentVO read(int content_num) throws Exception;
+	
 	
 	
 	public List<ContentListDTO> listContent();
@@ -37,6 +40,12 @@ public interface ContentService {
 	
 	public List<ContentListDTO> MyContent(Integer member_num);
 	
+	// 조회수 증가
+	void read_count(int read_count) throws Exception;
+	
+
+	
+
 	
 	
 }
