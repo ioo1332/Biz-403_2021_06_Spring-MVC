@@ -2,8 +2,6 @@ package com.honjal.honjal.service.impl;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -15,45 +13,49 @@ import com.honjal.honjal.model.ContentVO;
 import com.honjal.honjal.service.ContentService;
 
 import lombok.RequiredArgsConstructor;
+
 @RequiredArgsConstructor
 @Service("contentServiceV1")
 public class ContentServiceImplV1 implements ContentService {
-	
-	protected final ContentDao contDao;
-	private SqlSession sqlSession;
-	
 
-	
-	
+	protected final ContentDao contentDao;
+	protected final SqlSession sqlSession;
 
 	@Override
-	public int insert(ContentVO contentVO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public ContentVO findByIdContent(String content_num) {
+		ContentVO contentVO = contentDao.findByIdContent(content_num);
+		return contentVO;
 	}
 
 	@Override
-	public int update(ContentVO contentVO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insert(ContentVO contentVO) throws Exception {
+		contentDao.insert(contentVO);
+		return;
 	}
 
 	@Override
-	public int delete(int content_num) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public void update(ContentVO contentVO) throws Exception {
+		contentDao.update(contentVO);
+		return;
 	}
 
 	@Override
-	public List<ContentListDTO> listContent() {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Integer content_num) throws Exception {
+		contentDao.delete(content_num);
+		return;
+	}
+
+	@Override
+	public List<ContentListDTO> allContent() {
+		List<ContentListDTO> list = contentDao.allContent();
+		return list;
 	}
 
 	@Override
 	public List<ContentListDTO> menuContent(String board_code) {
 		// TODO Auto-generated method stub
-		return null;
+		List<ContentListDTO> contentList = contentDao.menuContent(board_code);
+		return contentList;
 	}
 
 	@Override
@@ -79,21 +81,19 @@ public class ContentServiceImplV1 implements ContentService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
-	public void read_count(int content_num) throws Exception {
+	public void view_count(int content_num) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("write-mapper.board_Count", content_num);
+		sqlSession.update("content-mapper.view_count", content_num);
 	}
 
-	// 글 조회
-		@Transactional(isolation = Isolation.READ_COMMITTED)
-		@Override
-		public ContentVO read(int content_num) throws Exception {
-				contDao.board_Count(content_num);
-			return ((ContentService) contDao).read(content_num);
-		}
-
-
+	@Transactional(isolation = Isolation.READ_COMMITTED)
+	@Override
+	public List<ContentListDTO> menuContent(String board_code, int content_num) throws Exception {
+		List<ContentListDTO> contentList = contentDao.menuContent(board_code);
+		contentDao.view_count(content_num);
+		return contentList;
+	}
 
 }

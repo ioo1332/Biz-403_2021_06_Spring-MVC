@@ -17,6 +17,7 @@
   font-weight: normal;
   font-style: normal;
 }
+
 /* 메뉴 - 롯데마트드림체 */
 @font-face {
   font-family: "LotteMartDream";
@@ -27,6 +28,7 @@
     url("//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff")
       format("woff");
 }
+
 /* 본문 - 나눔바른고딕 */
 @font-face {
   font-family: "NanumBarunGothic";
@@ -40,6 +42,7 @@
     url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf")
       format("truetype");
 }
+
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -47,12 +50,14 @@
   text-decoration: none;
   outline: 0;
 }
+
 .main_box, #join_form, .write_form {
 	font-family: "NanumBarunGothic";
   width: 1050px;
   margin: auto;
   text-align: center;
 }
+
 button {
   background-color: white;
   border: 2px solid #b3d83c;
@@ -60,9 +65,11 @@ button {
   color: rgb(39, 38, 38);
   outline: 0;
 }
+
 button:hover {
   cursor: pointer;
 }
+
 footer {
   width: 100%;
   margin: auto;
@@ -71,12 +78,13 @@ footer {
   border-top: 3px solid #d6b26e;
   line-height: 5;
 }
+
 </style>
 <link href="${rootPath}/static/css/nav.css?ver=2021-07-07-001" rel="stylesheet" />
 <link href="${rootPath}/static/css/main.css?ver=2021-07-07-001" rel="stylesheet" />
-<link href="${rootPath}/static/css/board.css?ver=2021-07-07-001" rel="stylesheet" />
+<link href="${rootPath}/static/css/board.css?ver=2021-07-11-001" rel="stylesheet" />
 <link href="${rootPath}/static/css/join.css?ver=2021-07-07-001" rel="stylesheet" />
-<link href="${rootPath}/static/css/read.css?ver=2021-07-07-001" rel="stylesheet" />
+<link href="${rootPath}/static/css/read.css?ver=2021-07-11-001" rel="stylesheet" />
 <link href="${rootPath}/static/css/write_admin.css?ver=2021-07-07-001" rel="stylesheet" />
 </head>
 <body>
@@ -89,7 +97,7 @@ footer {
 			<li class="menu_list">랜선집들이</li>
 			<li class="menu_list">혼잘TALK</li>
 			<li class="menu_list">리뷰게시판</li>
-			<li class="menu_list">자취 Q&A</li>
+			<li class="menu_list">자취 Q&amp;A</li>
 		</ul>
 	</header>
 	<section id="main_sec">
@@ -101,10 +109,13 @@ footer {
 				<%@ include file="/WEB-INF/views/write.jsp"%>
 			</c:when>
 			<c:when test="${BODY == 'JOIN' }">
-				<%@ include file="/WEB-INF/views/join.jsp"%>
+				<%@ include file="/WEB-INF/views/member/join.jsp"%>
 			</c:when>
 			<c:when test="${BODY == 'READ' }">
 				<%@ include file="/WEB-INF/views/read.jsp"%>
+			</c:when>
+			<c:when test="${BODY == 'UPDATE' }">
+				<%@ include file="/WEB-INF/views/update.jsp"%>
 			</c:when>
 			<c:otherwise>
 				<%@ include file="/WEB-INF/views/main.jsp"%>
@@ -122,9 +133,11 @@ footer {
 document.querySelector("header img").addEventListener("click", (e) => {
 	location.href = "${rootPath}"
 });
+
 document.querySelector("#menu_box").addEventListener("click", (e) => {
     let text = e.target.textContent;
     let url = `${rootPath}`;
+
     if (text === "공지사항") {
       url += "/notice";
     } else if (text === "정보게시판") {
@@ -142,6 +155,7 @@ document.querySelector("#menu_box").addEventListener("click", (e) => {
     } else if (text === "SIGN UP") {
       url += "/join";
     }
+
     location.href = url;
   });
 </script>

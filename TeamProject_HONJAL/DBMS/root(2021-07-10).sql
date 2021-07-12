@@ -2,7 +2,6 @@ CREATE DATABASE honjalDB;
 
 USE honjalDB;
 
-
 CREATE TABLE tbl_member(
 	member_num	BIGINT AUTO_INCREMENT PRIMARY KEY,
 	member_level BIGINT	NOT NULL,
@@ -29,6 +28,9 @@ CREATE TABLE tbl_content(
 );
 DROP TABLE tbl_content;
 SELECT * FROM tbl_content;
+
+INSERT INTO tbl_content(member_num, member_nname, board_code, content_date, content_time, content_view, content_good, content_title, content_text)
+VALUES (1, "csy", "TIP-1", "2021-07-10", "15:13:00", 0, 0, "test", "테스트");
 
 
 CREATE TABLE tbl_board(
@@ -152,8 +154,6 @@ REFERENCES tbl_board(board_code);
 INSERT INTO tbl_member(member_level, member_id, member_pw, member_nname, member_email)
 VALUES (0, 'sy', 'sy1', 'csy', 'sy@naver.com');
 
-INSERT INTO tbl_content(content_num,member_num,member_nname,board_code,content_date,content_time,content_view,content_good,content_title,content_text)
-VALUES('1','0','sy',"NOT-1","2021-07-12","21:21:21","0","1","123","123");
 INSERT INTO tbl_board(board_code, board_name)
 VALUES ("NOT-1","공지사항");
 INSERT INTO tbl_board(board_code, board_name)
@@ -182,3 +182,19 @@ INSERT INTO tbl_board(board_code, board_name)
 VALUES ("QNA-1","자취QNA");
 
 
+SELECT * FROM tbl_content
+		WHERE content_num = 4;
+
+-- 전체글 목록
+SELECT * FROM tbl_content
+ORDER BY content_num DESC;
+
+SELECT * FROM tbl_content
+WHERE board_code = "TIP-1"
+ORDER BY content_date DESC, content_time DESC;
+        
+DELETE FROM tbl_content WHERE content_num = 1;
+
+UPDATE tbl_content
+SET content_title = "업데이트 테스트", content_text = "업데이트 테스트 내용"
+WHERE content_num = 1;

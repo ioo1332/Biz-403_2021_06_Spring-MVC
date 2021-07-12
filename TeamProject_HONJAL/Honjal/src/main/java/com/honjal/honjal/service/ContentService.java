@@ -7,25 +7,28 @@ import com.honjal.honjal.model.ContentVO;
 
 public interface ContentService {
 	
-	public int insert(ContentVO contentVO) throws Exception;
+	public ContentVO findByIdContent(String content_num);
+	
+	public void insert(ContentVO contentVO) throws Exception;
 	// 글쓰기
 	
-	public int update(ContentVO contentVO) throws Exception;
+	public void update(ContentVO contentVO) throws Exception;
 	// 글수정
 	
-	public int delete(int content_num) throws Exception;
+	public void delete(Integer content_num) throws Exception;
 	// 글삭제
 	
-	// 글 조회
-	public ContentVO read(int content_num) throws Exception;
 	
 	
-	
-	public List<ContentListDTO> listContent();
+	public List<ContentListDTO> allContent();
 	// 올라오는 모든 글 리스트 (최신글목록에서 사용)
 	
 	public List<ContentListDTO> menuContent(String board_code);
 	// 메뉴별 글 리스트 (각 게시판에서 사용)
+	
+
+
+	
 	
 	
 	
@@ -39,12 +42,11 @@ public interface ContentService {
 	// 글검색 (작성자로)
 	
 	public List<ContentListDTO> MyContent(Integer member_num);
-	
-	// 조회수 증가
-	void read_count(int read_count) throws Exception;
-	
+	// 내글검색
 
-	
+	void view_count(int content_view) throws Exception;
+
+	List<ContentListDTO> menuContent(String board_code, int content_num) throws Exception;
 
 	
 	

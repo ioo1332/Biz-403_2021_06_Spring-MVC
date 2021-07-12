@@ -21,7 +21,7 @@ public class ContentListDTO {
 	private String member_nname;	// 작성자 닉네임
 	private String content_date;	// 작성날짜
 	private String content_time;	// 작성시각
-	private int content_view;	// 조회수
+	private Integer content_view;	// 조회수
 	private int content_good;	// 추천수
 	
 }
