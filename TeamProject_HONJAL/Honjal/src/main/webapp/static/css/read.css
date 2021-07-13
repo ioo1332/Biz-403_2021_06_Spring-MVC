@@ -61,7 +61,7 @@
 }
 
 .content_date {
-  font-size: 15px;
+  font-size: 17px;
   padding-bottom: 10px;
 }
 
@@ -69,10 +69,6 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-}
-
-.content_member p{
-	font-size: 17px;
 }
 
 .member_img {

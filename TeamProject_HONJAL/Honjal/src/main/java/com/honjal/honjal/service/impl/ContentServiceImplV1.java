@@ -14,10 +14,7 @@ import com.honjal.honjal.service.ContentService;
 
 import lombok.RequiredArgsConstructor;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 21d7e07642e54534aee1027cf88a5f13d45b6750
 @RequiredArgsConstructor
 @Service("contentServiceV1")
 public class ContentServiceImplV1 implements ContentService {
@@ -26,7 +23,6 @@ public class ContentServiceImplV1 implements ContentService {
 	protected final SqlSession sqlSession;
 
 	@Override
-<<<<<<< HEAD
 	public void insert(ContentVO contentVO) throws Exception {
 		contentDao.insert(contentVO);
 		return;
@@ -35,40 +31,16 @@ public class ContentServiceImplV1 implements ContentService {
 	@Override
 	public void update(ContentVO contentVO) throws Exception {
 		contentDao.update(contentVO);
-=======
-	public ContentVO findByIdContent(String content_num) {
-		ContentVO contentVO = contentDao.findByIdContent(content_num);
-		return contentVO;
-	}
-
-	@Override
-	public void insert(ContentVO contentVO) throws Exception {
-		contentDao.insert(contentVO);
->>>>>>> 21d7e07642e54534aee1027cf88a5f13d45b6750
 		return;
 	}
 
 	@Override
-<<<<<<< HEAD
-	public void delete(Integer content_num) throws Exception {
-		contentDao.delete(content_num);
-=======
-	public void update(ContentVO contentVO) throws Exception {
-		contentDao.update(contentVO);
->>>>>>> 21d7e07642e54534aee1027cf88a5f13d45b6750
-		return;
-	}
-
-	@Override
-<<<<<<< HEAD
-=======
 	public void delete(Integer content_num) throws Exception {
 		contentDao.delete(content_num);
 		return;
 	}
 
 	@Override
->>>>>>> 21d7e07642e54534aee1027cf88a5f13d45b6750
 	public List<ContentListDTO> allContent() {
 		List<ContentListDTO> list = contentDao.allContent();
 		return list;
@@ -118,13 +90,9 @@ public class ContentServiceImplV1 implements ContentService {
 		contentDao.view_count(content_num);
 		return contentList;
 	}
-<<<<<<< HEAD
 	@Override
 	public ContentVO findByIdContent(Integer content_num) {
 		ContentVO contentVO = contentDao.findByIdContent(content_num);
 		return contentVO;
 	}
-=======
-
->>>>>>> 21d7e07642e54534aee1027cf88a5f13d45b6750
 }
