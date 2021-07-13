@@ -17,6 +17,7 @@ public class ContentVO {
 
 	private Integer content_num;		// 글번호
 	private Integer member_num;		// 유저번호
+	private String member_nname;	// 유저닉네임
 	private String board_code;		// 게시판코드
 	private String content_date;	// 작성날짜
 	private String content_time;	// 작성시각
