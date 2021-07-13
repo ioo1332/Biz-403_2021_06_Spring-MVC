@@ -17,5 +17,4 @@ public class BoardDTO {
 
 	private String board_code; // 게시판코드
 	private String board_name; // 게시판명
-
 }

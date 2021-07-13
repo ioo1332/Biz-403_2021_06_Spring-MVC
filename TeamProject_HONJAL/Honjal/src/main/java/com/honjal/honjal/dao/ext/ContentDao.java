@@ -21,5 +21,7 @@ public interface ContentDao extends GenericDao<ContentVO, Integer> {
 	public void delete(Integer content_num);
 
 	public void view_count(int content_num) throws Exception;
+	
+	public void comment_count(int content_num)throws Exception;
 
 }

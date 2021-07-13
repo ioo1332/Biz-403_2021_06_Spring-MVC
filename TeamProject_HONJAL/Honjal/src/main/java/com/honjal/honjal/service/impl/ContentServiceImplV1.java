@@ -83,6 +83,7 @@ public class ContentServiceImplV1 implements ContentService {
 		sqlSession.update("content-mapper.view_count", content_num);
 	}
 
+	//조회수
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public List<ContentListDTO> menuContent(String board_code, int content_num) throws Exception {
@@ -95,4 +96,14 @@ public class ContentServiceImplV1 implements ContentService {
 		ContentVO contentVO = contentDao.findByIdContent(content_num);
 		return contentVO;
 	}
+	//제목옆댓글수
+	@Override
+	public void comment_count(int content_view) throws Exception {
+		
+		
+ 
+		
+	}
+	
+	
 }

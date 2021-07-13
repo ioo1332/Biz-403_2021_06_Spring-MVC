@@ -44,9 +44,13 @@ public interface ContentService {
 	public List<ContentListDTO> MyContent(Integer member_num);
 	// 내글검색
 
-	void view_count(int content_view) throws Exception;
+	public void view_count(int content_view) throws Exception;
 
 	List<ContentListDTO> menuContent(String board_code, int content_num) throws Exception;
+	
+	public void comment_count (int content_view)throws Exception;
+	
+	
 
 	
 	
