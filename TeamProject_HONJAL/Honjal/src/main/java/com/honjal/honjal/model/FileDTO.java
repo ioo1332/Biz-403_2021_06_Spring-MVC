@@ -1,6 +1,4 @@
-package com.callor.gallery.model;
-
-
+package com.honjal.honjal.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,12 +14,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 public class FileDTO {
-
-	private Long file_seq;//	BIGINT	AUTO_INCREMENT	PRIMARYKEY
-	private Long file_gseq;//	BIGINT	NOT NULL	
-	private String file_original;//	VARCHAR(125)	NOT NULL	
-	private String file_upname;//	VARCHAR(125)	NOT NULL	
 	
-	
+	private Long file_num;	// 파일번호
+	private Long content_num;	// 글번호
+	private String member_num;	// 유저번호
+	private String board_code;	// 게시판코드
+	private String file_name;	// 파일명
 
 }
