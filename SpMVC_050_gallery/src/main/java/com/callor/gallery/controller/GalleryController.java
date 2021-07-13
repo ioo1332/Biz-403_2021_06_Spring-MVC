@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -143,10 +144,10 @@ public class GalleryController {
 	public String delete(@RequestParam("g_seq") String seq, HttpSession session) {
 		
 		// 삭제를 요구하면 로그인이 여부 확인
-		MemberVO memVO=(MemberVO) session.getAttribute("MEMBER");
-		if(memVO==null) {
-			return "redirect:/member/login";
-		}
+	//	MemberVO memVO=(MemberVO) session.getAttribute("MEMBER");
+	//	if(memVO==null) {
+	//		return "redirect:/member/login";
+//		}
 			Long g_seq=0L;
 		try {
 			g_seq=Long.valueOf(seq);
@@ -159,5 +160,10 @@ public class GalleryController {
 		int ret = gaService.delete(g_seq);
 		
 		return "redirect:/gallery";
+	}
+	@ResponseBody
+	@RequestMapping(value="/file/delete/{seq}",method=RequestMethod.GET)
+	public String file_delete(@PathVariable("seq") String seq) {
+		return "OK";
 	}
 }
