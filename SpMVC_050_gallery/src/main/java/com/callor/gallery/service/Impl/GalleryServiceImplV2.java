@@ -16,19 +16,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service("galleryServiceV2")
 public class GalleryServiceImplV2 extends GalleryServiceImplV1{
-
 	/*
+	 * @RequireArgConstructor 를 사용한 클래스를 상속받을때는 상속받은 클래스에서 강제로 생성자를 만들어야함
 	 * 
-	 * @RequireArgConstructor 문제로 상속받은 클래스에서
-	 * 강제로 생성자 만들어야 함
-	 * 
+	 * eclips의 자동완성 기능을 사용하여 생성자를 만든다
+	 * 만약 매개변수로 설정된 요소중 interface를 상속받은클래스가 2개이상일경우 @qulifier를 설정해야하는데
+	 * 이때 매개변수의 요소 type앞에 작성해주면된다
 	 */
-	public GalleryServiceImplV2(
-				GalleryDao gaDao, 
-				FileDao fDao, 
-				@Qualifier("fileServiceV2")  FileService fService) {
+	public GalleryServiceImplV2(GalleryDao gaDao, FileDao fDao, 
+			@Qualifier("fileServiceV2") FileService fService) {
 		super(gaDao, fDao, fService);
+		// TODO Auto-generated constructor stub
 	}
+
+	
+	
 
 	@Override
 	public GalleryDTO findByIdGallery(Long g_seq) {

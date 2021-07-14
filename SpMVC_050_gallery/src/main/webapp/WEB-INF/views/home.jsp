@@ -10,6 +10,7 @@
 	value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
+<script src="https://kit.fontawesome.com/ad303fb2a7.js" crossorigin="anonymous"></script>
 <style>
 	h1{
 		text-align: center;

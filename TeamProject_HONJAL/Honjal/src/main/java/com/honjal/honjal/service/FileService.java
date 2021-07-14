@@ -7,12 +7,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public interface FileService {
 	
-	public List<String>fileUp(MultipartHttpServletRequest file)throws Exception;
-
-	public List<String> fileUp(MultipartFile file)throws Exception;
-
-	List<String> fileUp(MultipartFile file, MultipartHttpServletRequest files) throws Exception;
+	public String fileUp(MultipartFile file)throws Exception;
 	
-	
-
+	public List<String>filesUp(MultipartHttpServletRequest files)throws Exception;
 }

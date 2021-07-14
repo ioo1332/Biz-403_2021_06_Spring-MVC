@@ -21,6 +21,11 @@ import com.callor.gallery.service.GalleryService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+/*
+ * final로 선언된 inject 변수의 초기화를 시키는데 필요한 생성자를 자동으로 만들어주는 lombok의 기능이다
+ * 클래스를 상속하면 @RequiredArgsConstructor 는
+ * 상속받은 클래스에서는 사용불가
+ */
 @RequiredArgsConstructor
 @Slf4j
 @Service("galleryServiceV1")
@@ -141,6 +146,59 @@ public class GalleryServiceImplV1 implements GalleryService {
 
 	@Override
 	public GalleryDTO findByIdGallery(Long g_seq) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int file_delete(Long g_seq) {
+		// TODO Auto-generated method stub
+		//파일을 삭제하기 위하여 저장된 파일정보를 select하기
+		FileDTO fDTO=fDao.findById(g_seq);
+		// 업로드 되어 저장된 파일을 삭제
+		int ret=fService.delete(fDTO.getFile_upname());
+		if(ret>0) {
+			//tbl_files table에서 데이터를 삭제
+			fDao.delete(g_seq);
+		}
+		return ret;
+	}
+	/*
+	 * pageNum를 매개변수로 받아서
+	 * selectAll한 데이터를 잘라내고 
+	 * pageNum에 해당하는 list 부분만 return하기
+	 * 한 페이지에 보여줄 list는 10개
+	 */
+	@Override
+	public List<GalleryDTO> selectAllPage(int pageNum) throws Exception {
+		// TODO Auto-generated method stub
+		// 1 전체 데이터 select하기
+		List<GalleryDTO>gaListAll=gaDao.selectAll();
+		// 2 pageNum 1이라면 list에서 0번째 요소~ 9번요소까지 추출하기
+		// pageNum가 2라면 list에서 10번째 요소~ 19번요소까지 추출하기
+		int totalCount=gaListAll.size();
+		int start=(pageNum-1)*10;
+		int end=pageNum*10;
+		if(pageNum*10>totalCount-10) {
+			end=totalCount;
+			start=end-10;
+			
+		}
+		List<GalleryDTO>pageList=new ArrayList<GalleryDTO>();
+		for(int i=start;i<end;i++) {
+			pageList.add(gaListAll.get(i));
+		}
+		return pageList;
+	}
+
+	@Override
+	public List<GalleryDTO> findBySearchPage(int pageNum, String search) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<GalleryDTO> findBySearchOrderPage(int pageNum, String search, String column) {
 		// TODO Auto-generated method stub
 		return null;
 	}

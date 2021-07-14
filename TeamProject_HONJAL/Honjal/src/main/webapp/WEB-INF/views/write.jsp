@@ -35,8 +35,8 @@
 			</c:choose>
 				<input class="write_title" type="text" placeholder="제목을 입력해주세요" /><br />
 				<div class="file_box">
-					<label for="ex_file">&#128190;</label> <input type="file"
-						id="ex_file" />
+					<label for="ex_file">&#128190;</label> <input type="file" multiple="multiple"
+		name="m_file" id="ex_file" />
 				</div>
 			</div>
 			<textarea class="write_text" placeholder="내용을 입력해주세요."></textarea>

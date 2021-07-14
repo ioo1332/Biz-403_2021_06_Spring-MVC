@@ -37,7 +37,7 @@
 	}
 	
 	div.gallery_file:after {
-		content: "삭제";
+		content: "";
 		position: absolute;
 		left:0;
 		top:0;
@@ -47,14 +47,18 @@
 		color:transparent;
 		z-index: 10;
 		transition:1s;
-		padding:auto;
+		/* box내의 text의 그려지는 높이를 box의 높이와 같게 만들면
+			text가 box의 세로 방향 가운데 정렬이 된다 */
+		line-height: 200px;
+		text-align: center;
 	}
 	
 	div.gallery_file:hover:after {
-		background-color: rgba(0,0,0,0.7);
+		content:'\f2ed';
+		background-color: rgba(0,0,0,0.5);
+		font-size:30px;
+		font-family:"Font Awesome 5 Free";
 		color:white;
-		text-align: center;
-		vertical-align: middle;
 		cursor: pointer
 	}
 	
@@ -175,20 +179,39 @@ delete_button.addEventListener("click",()=>{
 		
 	}
 })
-let gallery_files = document.querySelector("div#gallery_files")
+/*
+ * const:js에서 상수를 선언하기
+ 	다른언어에서는 상수선언이 메모리적 문제를 해결하고 동시성처리(멀티환경에서 서로 변수가 간섭하는현상을 핸들링)
+ 	를 쉽게 하기위한 방안으로 사용한다
+ 	
+ 	상수를 선언하는 이유는 여기에 설정된 값이 코드중간에 어떤이유로 변경되는것을 방지하는 역할
+ 	
+ 	한개의 선언된 변수에 코드중간에 다른값이 저장되어 논리적 오류를 일으킬수있다 
+ 	그러한 문제를 방지하기 위하여 const키워드를 상당히 권장한다
+ */
+const gallery_files=document.querySelector("div#gallery_files")
 if(gallery_files) {
 	
 	gallery_files.addEventListener("click",(e)=>{
-		let tag = e.target
+		const tag = e.target
+		// tag에 걸려있는 class 이름을 챙겨서 조건을걸때
+		// tag.className ==="gallery_file" 같이 사용하룻있지만
+		// 혹시 tag에 다수의 클래스가 설정될수있기때문에
+		// 조건이 false가 될수 있다
+		// className.includes함수를 사용하여 조건검사를 하는것이 좋다
 		if(tag.tagName === "DIV" && tag.className.includes("gallery_file")) {
 			let seq = tag.dataset.fseq
 			if(confirm( seq + "이미지 삭제")) {
-				
+				// Get method방식으로 ajax요청
 				fetch("${rootPath}/gallery/file/delete/" + seq)
 				.then( response=>response.text() )
 				.then(result=>{
 					if(result === "OK") {
 						alert("삭제성공")
+						// 현재 클릭된 DIV tag요소를 화면에서 제거하라
+						tag.remove()
+						}else if(result==="FAIL_SEQ"){
+							alert("이미지코드가 잘못되어 삭제할수없음")
 					} else if( result === "NO") {
 						alert("서버가 모른대")
 					} else {
