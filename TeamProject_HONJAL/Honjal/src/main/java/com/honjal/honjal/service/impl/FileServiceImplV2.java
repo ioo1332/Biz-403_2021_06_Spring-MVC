@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class FileServiceImplV2 extends FileServiceImplV1{
 	
 	protected final String winPath;
+	
 	protected String fileUpPath;
 	
 	@Autowired
@@ -23,8 +24,8 @@ public class FileServiceImplV2 extends FileServiceImplV1{
 	}
 	@Override
 	public String fileUp(MultipartFile file) throws Exception {
-		String originalFileName=file.getOriginalFilename();
-		if(originalFileName==null||originalFileName.isEmpty()) {
+		String originFileName=file.getOriginalFilename();
+		if(originFileName==null||originFileName.isEmpty()) {
 			return "";
 		}
 		File path=new File(fileUpPath);
@@ -32,7 +33,7 @@ public class FileServiceImplV2 extends FileServiceImplV1{
 			path.mkdirs();
 		}
 		String strUUID=UUID.randomUUID().toString();
-		strUUID +=originalFileName;
+		strUUID +=originFileName;
 		File uploadPathAdndFile=new File(fileUpPath,strUUID);
 		file.transferTo(uploadPathAdndFile);
 		return strUUID;

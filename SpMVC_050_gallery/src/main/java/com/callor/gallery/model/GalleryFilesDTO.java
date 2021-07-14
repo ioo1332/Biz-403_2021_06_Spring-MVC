@@ -39,7 +39,7 @@ public class GalleryFilesDTO {
 	private String g_time;//	varchar(10)
 	private String g_subject;//	varchar(50)
 	private String g_content;//	varchar(1000)
-	private String g_gimage;//	varchar(256)
+	private String g_image;//	varchar(256)
 	// 파일정보
 	private Long f_seq;//	bigint
 	private String f_original;//	varchar(256)

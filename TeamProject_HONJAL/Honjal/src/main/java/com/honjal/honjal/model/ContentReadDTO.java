@@ -13,9 +13,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BoardDTO {
+public class ContentReadDTO {
 
-	private String board_code; // 게시판코드
-	private String board_name; // 게시판명
-
+	private String content_title;
+	private int content_good;
+	private String content_date;
+	private String content_time;
+	private String member_nname;
+	private String content_text;
+	
 }

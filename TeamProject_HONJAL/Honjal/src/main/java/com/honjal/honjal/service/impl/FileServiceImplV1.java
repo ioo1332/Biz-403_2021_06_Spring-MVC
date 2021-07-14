@@ -22,15 +22,24 @@ public class FileServiceImplV1 implements FileService{
 
 	@Autowired
 	private ResourceLoader resLoader;
+	
+	protected final String winPath;
+	protected String fileUpPath;
+	
+	@Autowired
+	public void getFilePath(String winPath){
+		
+		this.fileUpPath=this.winPath;
+	}
 
 	@Override
 	public String fileUp(MultipartFile file) throws Exception {
 		// TODO Auto-generated method stub
-		String originalFileName=file.getOriginalFilename();
+		String originFileName=file.getOriginalFilename();
 		Resource res=resLoader.getResource("/files");
 		String filePath=res.getURI().getPath();
 		String strUUID=UUID.randomUUID().toString();
-		strUUID+=originalFileName;
+		strUUID+=originFileName;
 		File uploadPathAndFile=new File(filePath,strUUID);
 		file.transferTo(uploadPathAndFile);
 		return strUUID;
@@ -44,7 +53,7 @@ public class FileServiceImplV1 implements FileService{
 		List<MultipartFile>fileList=files.getFiles(tagName);
 		for(MultipartFile file:fileList) {
 			String fileName=this.fileUp(file);
-			fileNames.add(tagName);
+			fileNames.add(fileName);
 		}
 		return fileNames;
 	}

@@ -3,25 +3,29 @@ CREATE DATABASE honjalDB;
 USE honjalDB;
 
 CREATE TABLE tbl_member(
-	member_num	BIGINT	AUTO_INCREMENT	PRIMARY KEY,
-	member_level	BIGINT	NOT NULL,
-	member_id	VARCHAR(20)	NOT NULL	UNIQUE,
-	member_pw	VARCHAR(30)	NOT NULL,
-	member_nname	VARCHAR(30)	NOT NULL	UNIQUE,
-	member_email	VARCHAR(30)	NOT NULL	UNIQUE
+	member_num	BIGINT AUTO_INCREMENT PRIMARY KEY,
+	member_level BIGINT	NOT NULL,
+	member_id VARCHAR(20)	NOT NULL UNIQUE,
+	member_pw VARCHAR(30)	NOT NULL,
+	member_nname VARCHAR(30)	NOT NULL UNIQUE,
+	member_email VARCHAR(30)	NOT NULL UNIQUE
 );
 DROP TABLE tbl_member;
+
+INSERT INTO tbl_member(member_level, member_id, member_pw, member_nname, member_email)
+VALUES (0, 'sy', 'sy1', 'csy', 'sy@naver.com'
 
 CREATE TABLE tbl_content(
 	content_num	BIGINT	AUTO_INCREMENT	PRIMARY KEY,
 	member_num	BIGINT	NOT NULL,
+    content_nname VARCHAR(30) NOT NULL,
 	board_code	CHAR(4)	NOT NULL,
 	content_date	VARCHAR(10)	NOT NULL,
 	content_time	VARCHAR(10)	NOT NULL,
 	content_view	INT	NOT NULL,
 	content_good	INT	NOT NULL,
-	content_title	VARCHAR(125)	NOT NULL,
-	content_text	VARCHAR(2000)	NOT NULL	
+	content_title	VARCHAR(125) NOT NULL,
+	content_text	VARCHAR(2000) NOT NULL	
 );
 DROP table tbl_content;
 
@@ -30,6 +34,7 @@ CREATE TABLE tbl_board(
 	board_code	CHAR(4)		PRIMARY KEY,
 	board_name	VARCHAR(20)	NOT NULL	
 );
+DROP TABLE tbl_board;
 
 CREATE TABLE tbl_comment(
 	comment_num	BIGINT	AUTO_INCREMENT	PRIMARY KEY,
@@ -40,14 +45,16 @@ CREATE TABLE tbl_comment(
 	comment_text	VARCHAR(500)	NOT NULL,	
 	comment_time	VARCHAR(20)	NOT NULL	
 );
+DROP TABLE tbl_comment;
 
 CREATE TABLE tbl_file(
-	file_num	BIGINT		PRIMARY KEY,
-	content_num	BIGINT	NOT NULL,
-	member_num	BIGINT	NOT NULL,
-	board_code	 CHAR(4)	NOT NULL,	
-	file_name	VARCHAR(200)	NOT NULL	
+	file_num	BIGINT PRIMARY KEY,
+	content_num	BIGINT NOT NULL,
+	member_num	BIGINT NOT NULL,
+	board_code	 CHAR(4) NOT NULL,	
+	file_name	VARCHAR(200) NOT NULL	
 );
+DROP TABLE tbl_file;
 
 CREATE TABLE tbl_scrap(
 	scrap_num	BIGINT	AUTO_INCREMENT	PRIMARY KEY,
@@ -56,6 +63,7 @@ CREATE TABLE tbl_scrap(
 	board_code	 CHAR(4)	NOT NULL,
 	scrap_date	VARCHAR(20)	NOT NULL	
 );
+DROP TABLE tbl_scrap;
 
 -- fk 삭제
 ALTER TABLE tbl_comment
@@ -92,6 +100,7 @@ ADD CONSTRAINT fk_board_code
 FOREIGN KEY (board_code) 
 REFERENCES tbl_board(board_code); 
 
+SELECT * FROM tbl_content;
 
 
 

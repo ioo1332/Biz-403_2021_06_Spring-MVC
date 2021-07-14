@@ -12,6 +12,12 @@
   margin-bottom: 10px;
 }
 
+#search_type {
+	height: 80%;
+	border: 0;
+	margin-right: 10px;
+}
+
 .search_input {
   border: 1px solid lightgray;
   border-radius: 15px;
@@ -40,7 +46,7 @@
   margin-bottom: 15px;
 }
 
-select {
+.board select {
   padding: 0px 7px;
   width: 1px;
 }
@@ -57,12 +63,22 @@ select {
   background-color: #faf5ef;
 }
 
+.board .content_title {
+	text-align: left;
+}
+
 .board tr td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 12px 5px;
   border-bottom: 0.5px solid #eae9e9;
+  font-size: 15px;
+}
+
+.board .content_title:hover {
+	cursor: pointer;
+	text-decoration: underline;
 }
 
 .td_title {

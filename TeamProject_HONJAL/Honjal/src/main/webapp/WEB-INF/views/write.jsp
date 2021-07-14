@@ -34,9 +34,11 @@
 				</c:when>
 			</c:choose>
 				<input class="write_title" type="text" placeholder="제목을 입력해주세요" /><br />
+				<form method="POST" enctype="multipart/form-data">
 				<div class="file_box">
 					<label for="ex_file">&#128190;</label> <input type="file" multiple="multiple"
 		name="m_file" id="ex_file" />
+		</form>
 				</div>
 			</div>
 			<textarea class="write_text" placeholder="내용을 입력해주세요."></textarea>

@@ -5,7 +5,7 @@
   
  <mapper namespace="com.honjal.honjal.dao.ext.ContentDao">
  
- 	<select id="findByIdContent" parameterType="String" resultType="ContentVO">
+ 	<select id="findByIdContent" parameterType="Integer" resultType="ContentVO">
 		SELECT * FROM tbl_content
 		WHERE content_num = #{content_num}
 	</select>
@@ -17,7 +17,13 @@
 
  	<select id="menuContent" parameterType="String" resultType="ContentListDTO">
 		SELECT * FROM tbl_content
-		WHERE board_code LIKE '${board_code}%'
+		WHERE board_code LIKE CONCAT(#{board_code}, '%')
+		ORDER BY content_num DESC
+	</select>
+	
+	<select id="searchTitleContent" parameterType="String" resultType="ContentListDTO">
+		SELECT * FROM tbl_content
+		WHERE content_title LIKE CONCAT('%', #{search_word}, '%') AND board_code LIKE CONCAT(#{menu}, '%')
 		ORDER BY content_num DESC
 	</select>
 	
@@ -35,18 +41,12 @@
  	<delete id="delete" parameterType="Integer">
  		DELETE FROM tbl_content WHERE content_num = #{content_num}
  	</delete>
+ 	
  	<!-- 조회수 -->
  	<update id="view_count" parameterType="int">
         UPDATE tbl_content
         SET content_view = content_view + 1
         WHERE content_num=#{content_num}
 	</update>
-	
-	
-	
-
-
-	
-	
  	
  </mapper>

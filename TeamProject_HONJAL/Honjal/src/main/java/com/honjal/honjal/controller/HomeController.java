@@ -1,27 +1,46 @@
 package com.honjal.honjal.controller;
 
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.honjal.honjal.model.ContentListDTO;
+import com.honjal.honjal.service.ContentService;
+import com.honjal.honjal.service.FileService;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class HomeController {
 	
+	@Qualifier("fileServiceV2")
+	protected final FileService fileService;
+	protected final ContentService contentService;
+	
 	@RequestMapping(value = {"/",""}, method = RequestMethod.GET)
-	public String home() {
+	public String home(Model model) {
 		
+		List<ContentListDTO> list = contentService.allContent();
+		
+		model.addAttribute("CONTENTS",list);
 		return "home";
 	}
 	
-	@RequestMapping(value = "/join", method = RequestMethod.GET)
-	public String join(Model model) {
+	@RequestMapping(value="/read" , method = RequestMethod.GET)
+	public String read(String board_code, Model model) {
 		
-		model.addAttribute("BODY", "JOIN");
+		// 전체글목록에서 글 클릭하면 그 게시판의 read로 넘어가게
+		
 		return "home";
 	}
-	
 	
 	@RequestMapping(value = "/scrap", method = RequestMethod.GET)
 	public String scrap(Model model) {
@@ -29,12 +48,13 @@ public class HomeController {
 		model.addAttribute("BODY", "SCRAP");
 		return "home";
 	}
+	@RequestMapping(value = "/sub", method = RequestMethod.POST)
+	public String home(
+			@RequestParam("one_file") MultipartFile one_file,
+			MultipartHttpServletRequest m_file) {
 	
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String write_admin(Model model) {
+		List<MultipartFile> files = m_file.getFiles("m_file");
 		
-		model.addAttribute("BODY", "WRITE_ADMIN");
 		return "home";
-	}
-	
+}
 }
