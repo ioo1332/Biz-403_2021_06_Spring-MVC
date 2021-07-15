@@ -30,6 +30,7 @@
 		border: 1px solid black;
 	}
 </style>
+<%@ include file="/WEB-INF/views/include/include_gallery_search.jspf" %>
 <c:forEach items="${GALLERYS}" var="GALLERY">
 <div class="ga_box">
 	<div id="ga_box1" >

@@ -241,6 +241,24 @@ public class GalleryServiceImplV1 implements GalleryService {
 		return null;
 	}
 
+	@Override
+	public List<GalleryDTO> findBySearchPage(String search_column, String search_text, int pageNum, Model model) {
+		// TODO Auto-generated method stub
+		List<GalleryDTO>galleryList=gaDao.findBySearch( search_column, search_text);
+		int totalListSize=galleryList.size();
+		PageDTO pageDTO=pageService.makePagination(totalListSize,pageNum);
+		List<GalleryDTO>pageList=new ArrayList<>();
+		if(pageDTO==null) {
+			model.addAttribute("GALLERYS", galleryList);
+			return null;
+		}
+		for(int i=pageDTO.getOffset();i<pageDTO.getLimit();i++) {
+			pageList.add(galleryList.get(i));
+		}
+		model.addAttribute("GALLERYS", galleryList);
+		return null;
+	}
+
 
 
 	

@@ -23,9 +23,6 @@ public class FileServiceImplV1 implements FileService{
 	@Autowired
 	private ResourceLoader resLoader;
 	
-	
-	
-	
 	@Override
 	public String fileUp(MultipartFile file) throws Exception {
 		// TODO Auto-generated method stub
