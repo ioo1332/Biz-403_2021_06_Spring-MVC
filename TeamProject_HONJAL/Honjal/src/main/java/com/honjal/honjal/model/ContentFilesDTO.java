@@ -1,6 +1,5 @@
 package com.honjal.honjal.model;
 
-
 import java.util.List;
 
 import lombok.AllArgsConstructor;

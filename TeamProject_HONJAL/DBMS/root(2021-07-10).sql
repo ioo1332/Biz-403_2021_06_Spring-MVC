@@ -219,5 +219,13 @@ FROM TBL_CONTENT CO
 	
 
 SELECT * FROM tbl_content
-WHERE content_title LIKE CONCAT('%', "자유", '%') AND board_code = "TAL-1"
+WHERE content_title LIKE CONCAT('%', "자유", '%') AND board_code LIKE CONCAT("TAL", '%')
+
 ORDER BY content_num DESC;
+
+-- 인기글
+SELECT * FROM tbl_content
+WHERE board_code LIKE CONCAT("TIP",'%')
+ORDER BY content_good DESC LIMIT 5;
+
+SELECT * FROM tbl_member;

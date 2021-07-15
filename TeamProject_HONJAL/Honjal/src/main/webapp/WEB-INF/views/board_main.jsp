@@ -2,6 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="rootPath" value="${pageContext.request.contextPath}" />
+<style>
+	* {
+		list-style: none;
+	}
+	
+	.page_ul {
+		display: flex;
+	}
+	
+</style>
 
 <article class="main_box">
 	<h2 class="board_title">
@@ -147,6 +157,7 @@
 						<td class="member_nname">${CONTENT.member_nname}</td>
 						<td class="content_date">${CONTENT.content_date}</td>
 						<td class="content_view">${CONTENT.content_view}</td>
+						<td class="content_good">${CONTENT.content_good}</td>
 					</tr>
 				</c:forEach>
 			</c:when>
@@ -154,16 +165,38 @@
 
 	</table>
 	<div class="btn_write_box">
-		<button class="btn_write">글쓰기</button>
+	<c:choose>
+		<c:when test="${MENU == 'NOT' or MENU == 'INF'}">
+			<c:if test="${SESSION.member_level <= 0}">
+				<button class="btn_write">글쓰기</button>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<button class="btn_write">글쓰기</button>
+		</c:otherwise>
+	</c:choose>
+	
+	
+	<!-- 공지사항, 정보게시판은 작성자에게만 글쓰기 버튼 보이게 -->
 	</div>
 	<div class="paging_box">
-		<a href="#">&laquo;</a> <a href="#" class="on">1</a> <a href="#">2</a>
-		<a href="#">3</a> <a href="#">4</a> <a href="#">5</a> <a href="#">&raquo;</a>
+		<ul class="page_ul">
+			<li data-pnum="1">&lt;&lt;</li>
+			<li data-pnum="${PAGE_NUM - 1}">&lt;</li>
+			<c:forEach begin="1" end="10" var="pageNum">
+				<li data-pnum="${pageNum}" class="<c:if test="${PAGE_NUM == pageNum}">active</c:if>"></li>
+			</c:forEach>
+			<li data-pnum="${PAGE_NUM + 1}">&gt;</li>
+			<li data-pnum="99">&gt;&gt;</li>
+		</ul>
 	</div>
+	
+	
 </article>
 
 <script>
 let rootPath = "${rootPath}/board"
+let button_write = document.querySelector(".btn_write")
 
 let type = document.querySelector("select#search_type")
 type.addEventListener("change",(e)=>{
@@ -177,25 +210,37 @@ type.addEventListener("change",(e)=>{
 	})
 })
 
+if(button_write) {
+	button_write.addEventListener("click",(e)=>{
+		fetch(rootPath + "/write")
+			.then(response=>response.text())
+			.then(result=>{
+				if(result === "NULL") {
+					if(confirm("로그인 후 이용 가능합니다")) {
+						location.href = "${rootPath}"
+					}
+				} else if(result === "OK") {
+					if(${MENU == 'NOT'}) {
+						rootPath += "/not"
+					} else if(${MENU == 'INF'}) {
+						rootPath += "/inf"
+					} else if(${MENU == 'TIP'}) {
+						rootPath += "/tip"
+					} else if(${MENU == 'INT'}) {
+						rootPath += "/int"
+					} else if(${MENU == 'TAL'}) {
+						rootPath += "/tal"
+					} else if(${MENU == 'REV'}) {
+						rootPath += "/rev"
+					} else if(${MENU == 'QNA'}) {
+						rootPath += "/qna"
+					}
+					location.href = rootPath + "/write";
+				}
+			})
+	})
+}
 
-document.querySelector(".btn_write").addEventListener("click",(e)=>{
-	if(${MENU == 'NOT'}) {
-		rootPath += "/not"
-	} else if(${MENU == 'INF'}) {
-		rootPath += "/inf"
-	} else if(${MENU == 'TIP'}) {
-		rootPath += "/tip"
-	} else if(${MENU == 'INT'}) {
-		rootPath += "/int"
-	} else if(${MENU == 'TAL'}) {
-		rootPath += "/tal"
-	} else if(${MENU == 'REV'}) {
-		rootPath += "/rev"
-	} else if(${MENU == 'QNA'}) {
-		rootPath += "/qna"
-	}
-	location.href = rootPath + "/write";
-})
 
 let table = document.querySelector(".board")
 if(table) {
@@ -228,9 +273,10 @@ if(table) {
 }
 
 let select = document.querySelector("select.content_head")
-select.addEventListener("change",(e)=>{
-	let value = e.target.value
-	location.href = "${rootPath}/board/" + value
-})
-
+if(select) {
+	select.addEventListener("change",(e)=>{
+		let value = e.target.value
+		location.href = "${rootPath}/board/" + value
+	})
+}
 </script>

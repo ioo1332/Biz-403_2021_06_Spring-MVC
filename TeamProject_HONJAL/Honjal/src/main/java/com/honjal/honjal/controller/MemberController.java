@@ -70,17 +70,15 @@ public class MemberController {
 		model.addAttribute("BODY","LOGIN");
 		return "home";
 	}
+	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(MemberVO memberVO,Model model,HttpSession session) {
 		
-		log.debug("로그인","무야호");		
 		memberVO = memService.login(memberVO,model);
-		log.debug("로그인","무야호2");
 		if(memberVO == null) {
 			model.addAttribute("BODY","LOGIN");
 			return "home";
 		}else {			
-			log.debug("로그인","무야호3");			
 			session.setAttribute("MEMBER", memberVO);			
 			return "redirect:/";
 		}

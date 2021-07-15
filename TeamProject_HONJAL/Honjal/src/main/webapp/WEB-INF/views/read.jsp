@@ -5,10 +5,13 @@
 
 <div class="main_box read_box">
 
-      <div class="ud_box">
-        <button class="btn_update">수정</button>
-        <button class="btn_delete">삭제</button>
-      </div>
+		<div class="ud_box">
+		<c:if test="${CONTENT.member_num == SESSION.member_num}">
+	        <button class="btn_update">수정</button>
+	        <button class="btn_delete">삭제</button>
+		</c:if>
+		</div>
+		<!-- 작성자에게만 수정,삭제 버튼 보이게 -->
       
       <section class="content_box">
         <h3 class="content_title">${CONTENT.content_title}</h3>

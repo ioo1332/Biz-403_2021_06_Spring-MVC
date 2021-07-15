@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.honjal.honjal.model.ContentDTO;
 import com.honjal.honjal.model.ContentListDTO;
 import com.honjal.honjal.model.ContentVO;
+import com.honjal.honjal.model.MemberVO;
 import com.honjal.honjal.service.ContentService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,7 +33,7 @@ public class BoardController {
 	protected final ContentService contentService;
 
 	@RequestMapping(value={"/{menu}","/{menu}/"}, method=RequestMethod.GET)
-	public String board(@PathVariable("menu") String menu, Model model) {
+	public String board(@PathVariable("menu") String menu, Model model, HttpSession session) {
 		
 		String menu_str = menu.toUpperCase();
 		String[] menu_arr = menu_str.split("-");
@@ -44,6 +46,7 @@ public class BoardController {
 		if(menu_arr.length > 1) menu_str = menu_arr[0];
 		// /TIP-1로 넘어오면 menu_str에 TIP만 담김
 		
+		model.addAttribute("SESSION", session.getAttribute("MEMBER"));
 		model.addAttribute("BODY", "BOARD_MAIN");
 		model.addAttribute("MENU", menu_str);
 		return "home";
@@ -117,43 +120,38 @@ public class BoardController {
 	
 	*/
 	
+	@ResponseBody
+	@RequestMapping(value="/write")
+	public String login_check(HttpSession session) {
+		MemberVO memberVO = (MemberVO) session.getAttribute("MEMBER");
+		if(memberVO == null) {
+			return "NULL";
+		}
+		return "OK";
+	}
+	// 글쓰기 버튼 누르면 login 여부 확인한 후 스크립트로 alert창 띄워주기 위해 ajax용 메서드 따로 만듦
+	// write 메서드로 넘어가기 전에 검사해야함
+	
 	@RequestMapping(value="/{menu}/write", method=RequestMethod.GET)
 	public String write( @PathVariable("menu") String menu,  Model model, HttpSession session) {
-		//MemberVO memberVO = (MemberVO) session.getAttribute("MEMBER");
-		//Integer member_num = memberVO.getMember_num();
 		
+		MemberVO memberVO = (MemberVO) session.getAttribute("MEMBER");
 		
-		ContentVO contentVO = ContentVO.builder().member_num(1).member_nname("csy").build();
-		// 로그인 기능 구현되면 member_num과 member_nname은 session에서 가져옴
-
+		ContentVO contentVO = ContentVO.builder().member_num(memberVO.getMember_num()).member_nname(memberVO.getMember_nname()).build();
 		
+		model.addAttribute("CONTENT", contentVO);
 		model.addAttribute("BODY", "WRITE");
 		model.addAttribute("MENU",menu.toUpperCase());
-		// 이거도 임시로
-	//	ContentFilesDTO contentfilesDTO=ContentFilesDTO.builder().member_nname("sy").build();
-	//	model.addAttribute("CMD",contentfilesDTO);
-	//	model.addAttribute("MENU", );
-		
-		/*
-		if(.equals("TIP")) {
-			model.addAttribute("MENU","TIP");
-		} else if(.equals("TAL")) {
-			model.addAttribute("MENU","TALK");
-		} else if(.equals("REV")) {
-			model.addAttribute("MENU","REVIEW");
-		}
-		*/
 		return "home";
 	}
 	
 	@RequestMapping(value="/{menu}/write", method=RequestMethod.POST)
-	public String write(String bcode, HttpSession session, ContentVO contentVO ,ContentDTO contentDTO ,MultipartFile one_file, MultipartHttpServletRequest m_file) throws Exception {
+	public String write(String bcode, HttpSession session, ContentVO contentVO, ContentDTO contentDTO ,MultipartFile one_file, MultipartHttpServletRequest m_file) throws Exception {
 		Date date = new Date(System.currentTimeMillis());
 		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat st = new SimpleDateFormat("hh:mm:ss");
 		String curDate = sd.format(date);
 		String curTime = st.format(date);
-		
 		
 //		contentVO = ContentVO.builder().board_code(category).content_date(curDate).content_time(curTime).content_view(0).content_good(0).build();
 		
@@ -163,14 +161,16 @@ public class BoardController {
 		contentVO.setContent_view(0);
 		contentVO.setContent_good(0);
 		contentService.input(contentDTO, one_file, m_file);
+		
 		contentService.insert(contentVO);
 		return "redirect:/board/{menu}";
 	}
 	
 	@RequestMapping(value="/read", method=RequestMethod.GET)
-	public String read(Integer content_num, Model model) {
+	public String read(Integer content_num, Model model, HttpSession session) {
 		ContentVO contentVO = contentService.findByIdContent(content_num);
 		model.addAttribute("CONTENT",contentVO);
+		model.addAttribute("SESSION", session.getAttribute("MEMBER"));
 		model.addAttribute("BODY", "READ");
 		return "home";
 	}

@@ -18,12 +18,14 @@ public class FileServiceImplV2 extends FileServiceImplV1{
 	protected String fileUpPath;
 	
 	@Autowired
-	public void getFilePath(String winPath, String macPath) {
+	public void getFilePath(String winPath) {
 		
 	
 		this.fileUpPath = this.winPath;
 
 	}
+	
+
 	@Override
 	public String fileUp(MultipartFile file) throws Exception {
 		String originFileName=file.getOriginalFilename();
@@ -31,7 +33,7 @@ public class FileServiceImplV2 extends FileServiceImplV1{
 			return "";
 		}
 		File path=new File(fileUpPath);
-		if(!path.exists()) {
+		if(path.exists()) {
 			path.mkdirs();
 		}
 		String strUUID=UUID.randomUUID().toString();
@@ -41,11 +43,4 @@ public class FileServiceImplV2 extends FileServiceImplV1{
 		return strUUID;
 		
 	}
-	
-	
-	
-	
-
-
-
 }

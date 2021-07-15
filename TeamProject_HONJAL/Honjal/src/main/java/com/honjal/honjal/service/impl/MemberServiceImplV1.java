@@ -57,13 +57,13 @@ public class MemberServiceImplV1 implements MemberService{
 
 		MemberVO findVO = memberDao.findById(memberVO.getMember_id());
 		if(findVO == null) {
-			model.addAttribute("NOT_LOGIN","NOT_MEMBER_ID");
+			model.addAttribute("LOGIN_FAIL","NOT_MEMBER_ID");
 			return null;
 		}
 		if(findVO.getMember_pw().equals(memberVO.getMember_pw())) {
 			return findVO;
 		}
-		model.addAttribute("NOT_LOGIN","NOT_PASS");
+		model.addAttribute("LOGIN_FAIL","NOT_PASS");
 		return null;
 	}
 

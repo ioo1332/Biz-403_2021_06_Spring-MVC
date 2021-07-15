@@ -21,9 +21,10 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class HomeController {
 	
+	protected final ContentService contentService;
+	
 	@Qualifier("fileServiceV2")
 	protected final FileService fileService;
-	protected final ContentService contentService;
 	
 	@RequestMapping(value = {"/",""}, method = RequestMethod.GET)
 	public String home(Model model) {
@@ -34,20 +35,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value="/read" , method = RequestMethod.GET)
-	public String read(String board_code, Model model) {
-		
-		// 전체글목록에서 글 클릭하면 그 게시판의 read로 넘어가게
-		
-		return "home";
-	}
-	
-	@RequestMapping(value = "/scrap", method = RequestMethod.GET)
-	public String scrap(Model model) {
-		
-		model.addAttribute("BODY", "SCRAP");
-		return "home";
-	}
 	@RequestMapping(value = "/sub", method = RequestMethod.POST)
 	public String home(
 			@RequestParam("one_file") MultipartFile one_file,

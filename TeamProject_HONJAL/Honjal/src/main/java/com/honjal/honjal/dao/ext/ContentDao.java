@@ -25,7 +25,8 @@ public interface ContentDao extends GenericDao<ContentVO, Integer>{
 	
 	public void comment_count(int content_num)throws Exception;
 	
-	public List<ContentFilesDTO > findByIdGalleryFiles(Long g_seq);
+	public List<ContentFilesDTO> findByIdGalleryFiles(Long g_seq);
 	public ContentDTO  findByIdGalleryFilesResultMap(Long g_seq);
 	public void insert(ContentDTO contentDTO);
+	
 }

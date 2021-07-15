@@ -21,8 +21,7 @@ public class FileDTO {
 	private Long content_num;	// 글번호
 	private String member_num;	// 유저번호
 	private String board_code;	// 게시판코드
-	private String file_originname;	// 진짜파일명
-	private String file_upname;// 업로드 파일명
-	List<FileDTO> fileList;
+	private String file_name;	// 파일명
+	private List<FileDTO> fileList;
 
 }
