@@ -11,7 +11,7 @@ import com.honjal.honjal.model.ContentVO;
 public interface ContentDao extends GenericDao<ContentVO, Integer>{
 
 	public ContentVO findByIdContent(Integer content_num);
-	public void insert(ContentDTO contentDTO);
+	
 	public void insert(ContentVO contentVO);
 	public void update(ContentVO contentVO);
 	public void delete(Integer content_num);
@@ -27,5 +27,5 @@ public interface ContentDao extends GenericDao<ContentVO, Integer>{
 	
 	public List<ContentFilesDTO > findByIdGalleryFiles(Long g_seq);
 	public ContentDTO  findByIdGalleryFilesResultMap(Long g_seq);
-	
+	public void insert(ContentDTO contentDTO);
 }

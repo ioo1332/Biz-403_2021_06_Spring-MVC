@@ -10,4 +10,6 @@ public interface FileService {
 	public String fileUp(MultipartFile file)throws Exception;
 	
 	public List<String>filesUp(MultipartHttpServletRequest files)throws Exception;
+	
+	List<String> fileUp(MultipartFile file, MultipartHttpServletRequest files) throws Exception;
 }

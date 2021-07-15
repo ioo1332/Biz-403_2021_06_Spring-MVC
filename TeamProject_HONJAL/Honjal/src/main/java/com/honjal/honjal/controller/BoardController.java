@@ -153,7 +153,7 @@ public class BoardController {
 		SimpleDateFormat st = new SimpleDateFormat("hh:mm:ss");
 		String curDate = sd.format(date);
 		String curTime = st.format(date);
-		contentService.input(contentDTO, one_file, m_file);
+		
 		
 //		contentVO = ContentVO.builder().board_code(category).content_date(curDate).content_time(curTime).content_view(0).content_good(0).build();
 		
@@ -162,7 +162,7 @@ public class BoardController {
 		contentVO.setContent_time(curTime);
 		contentVO.setContent_view(0);
 		contentVO.setContent_good(0);
-		
+		contentService.input(contentDTO, one_file, m_file);
 		contentService.insert(contentVO);
 		return "redirect:/board/{menu}";
 	}
