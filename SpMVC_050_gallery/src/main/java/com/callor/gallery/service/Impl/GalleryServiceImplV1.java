@@ -8,23 +8,29 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.callor.gallery.model.FileDTO;
 import com.callor.gallery.model.GalleryDTO;
 import com.callor.gallery.model.GalleryFilesDTO;
+import com.callor.gallery.model.PageDTO;
 import com.callor.gallery.persistance.ext.FileDao;
 import com.callor.gallery.persistance.ext.GalleryDao;
 import com.callor.gallery.service.FileService;
 import com.callor.gallery.service.GalleryService;
+import com.callor.gallery.service.PageService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 /*
- * final로 선언된 inject 변수의 초기화를 시키는데 필요한 생성자를 자동으로 만들어주는 lombok의 기능이다
- * 클래스를 상속하면 @RequiredArgsConstructor 는
- * 상속받은 클래스에서는 사용불가
+ * final로 선언된 Inject 변수의 초기화를 시키는데 필요한
+ * 생성자를 자동으로 만들어 주는 lombok의 기능이다.
+ * 
+ * 클래스를 상속하면 @Requie...Con 는
+ * 상속받은 클래스에서 사용 불가
+ * 
  */
 @RequiredArgsConstructor
 @Slf4j
@@ -36,6 +42,8 @@ public class GalleryServiceImplV1 implements GalleryService {
 	
 	@Qualifier("fileServiceV2")
 	protected final FileService fService;
+	
+	protected final PageService pageService;
 	
 	/*
 	 * @Autowired가 설정된 변수, method, 객체 등을 만나면
@@ -137,6 +145,11 @@ public class GalleryServiceImplV1 implements GalleryService {
 		return gfList;
 	}
 
+	@Override
+	public GalleryDTO findByIdGellery(Long g_seq) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public int delete(Long g_seq) {
@@ -145,51 +158,76 @@ public class GalleryServiceImplV1 implements GalleryService {
 	}
 
 	@Override
-	public GalleryDTO findByIdGallery(Long g_seq) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int file_delete(Long g_seq) {
 		// TODO Auto-generated method stub
-		//파일을 삭제하기 위하여 저장된 파일정보를 select하기
-		FileDTO fDTO=fDao.findById(g_seq);
-		// 업로드 되어 저장된 파일을 삭제
-		int ret=fService.delete(fDTO.getFile_upname());
-		if(ret>0) {
-			//tbl_files table에서 데이터를 삭제
-			fDao.delete(g_seq);
+		
+		// 파일을 삭제하기 위하여 저장된 파일 정보를 SELECT 하기
+		FileDTO fDTO = fDao.findById(g_seq);
+		
+		// 업로드되어 저장된 파일을 삭제
+		int ret = fService.delete(fDTO.getFile_upname());
+		
+		if( ret > 0) {
+			// tbl_files table에서 데이터를 삭제하기
+			ret = fDao.delete(g_seq);
 		}
 		return ret;
 	}
+
 	/*
 	 * pageNum를 매개변수로 받아서
-	 * selectAll한 데이터를 잘라내고 
-	 * pageNum에 해당하는 list 부분만 return하기
-	 * 한 페이지에 보여줄 list는 10개
+	 * selectALl 한 데이터를 잘라내고
+	 * pageNum에 해당하는 list 부분만 return 하기
+	 * 
+	 * 한페이지에 보여줄 list = 10 개
+	 * 
 	 */
 	@Override
 	public List<GalleryDTO> selectAllPage(int pageNum) throws Exception {
-		// TODO Auto-generated method stub
-		// 1 전체 데이터 select하기
-		List<GalleryDTO>gaListAll=gaDao.selectAll();
-		// 2 pageNum 1이라면 list에서 0번째 요소~ 9번요소까지 추출하기
-		// pageNum가 2라면 list에서 10번째 요소~ 19번요소까지 추출하기
-		int totalCount=gaListAll.size();
-		int start=(pageNum-1)*10;
-		int end=pageNum*10;
-		if(pageNum*10>totalCount-10) {
-			end=totalCount;
-			start=end-10;
-			
+
+		// 1 전체 데이터 SELECT 하기
+		List<GalleryDTO> gaListAll = gaDao.selectAll();
+
+		// 2 pageNum가 1이라면 list에서 0번째 요소 ~ 9번째 요소까지 추출하기
+		//   pageNum가 2라면 list에서 10번째 요소 ~ 19번째 요소까지 추출하기
+		//   pageNum가 3라면 list에서 20번째 요소 ~ 29번째 요소까지 추출하기
+		
+		int totalCount = gaListAll.size();
+		
+		int start = (pageNum - 1) * 10;
+		int end = pageNum * 10;
+		
+		if( pageNum * 10 > totalCount - 10) {
+			end = totalCount;
+			start = end - 10;
 		}
-		List<GalleryDTO>pageList=new ArrayList<GalleryDTO>();
-		for(int i=start;i<end;i++) {
+		
+		List<GalleryDTO> pageList = new ArrayList<>();
+		for(int i = start; i < end ; i++) {
 			pageList.add(gaListAll.get(i));
 		}
 		return pageList;
 	}
+	
+	@Override
+	public List<GalleryDTO> selectAllPage(int intPageNum, Model model) throws Exception {
+		List<GalleryDTO>galleryAll=gaDao.selectAll();
+		int totalListSize=galleryAll.size();
+		PageDTO pageDTO=pageService.makePagination(totalListSize, intPageNum);
+		
+		List<GalleryDTO>pageList=new ArrayList<GalleryDTO>();
+		
+		for(int i=pageDTO.getOffset();i<pageDTO.getLimit();i++) {
+			pageList.add(galleryAll.get(i));
+		}
+		model.addAttribute("PAGE_NAV", pageDTO);
+		model.addAttribute("GALLERYS",pageList);
+		
+		return null;
+	
+	}
+	
+	
 
 	@Override
 	public List<GalleryDTO> findBySearchPage(int pageNum, String search) {
@@ -198,9 +236,12 @@ public class GalleryServiceImplV1 implements GalleryService {
 	}
 
 	@Override
-	public List<GalleryDTO> findBySearchOrderPage(int pageNum, String search, String column) {
+	public List<GalleryDTO> fineBySearchOderPage(int pageNum, String search, String column) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 	
 }

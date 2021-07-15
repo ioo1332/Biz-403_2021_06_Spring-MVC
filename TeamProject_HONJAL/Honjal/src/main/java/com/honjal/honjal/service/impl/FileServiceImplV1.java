@@ -23,15 +23,9 @@ public class FileServiceImplV1 implements FileService{
 	@Autowired
 	private ResourceLoader resLoader;
 	
-	protected final String winPath;
-	protected String fileUpPath;
 	
-	@Autowired
-	public void getFilePath(String winPath){
-		
-		this.fileUpPath=this.winPath;
-	}
-
+	
+	
 	@Override
 	public String fileUp(MultipartFile file) throws Exception {
 		// TODO Auto-generated method stub

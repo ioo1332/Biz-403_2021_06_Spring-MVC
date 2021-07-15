@@ -18,9 +18,11 @@ public class FileServiceImplV2 extends FileServiceImplV1{
 	protected String fileUpPath;
 	
 	@Autowired
-	public void getFilePath(String winPath){
+	public void getFilePath(String winPath, String macPath) {
 		
-		this.fileUpPath=this.winPath;
+	
+		this.fileUpPath = this.winPath;
+
 	}
 	@Override
 	public String fileUp(MultipartFile file) throws Exception {

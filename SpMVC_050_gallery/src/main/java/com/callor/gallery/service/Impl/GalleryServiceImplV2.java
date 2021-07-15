@@ -10,30 +10,25 @@ import com.callor.gallery.model.GalleryDTO;
 import com.callor.gallery.persistance.ext.FileDao;
 import com.callor.gallery.persistance.ext.GalleryDao;
 import com.callor.gallery.service.FileService;
+import com.callor.gallery.service.PageService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service("galleryServiceV2")
 public class GalleryServiceImplV2 extends GalleryServiceImplV1{
-	/*
-	 * @RequireArgConstructor 를 사용한 클래스를 상속받을때는 상속받은 클래스에서 강제로 생성자를 만들어야함
-	 * 
-	 * eclips의 자동완성 기능을 사용하여 생성자를 만든다
-	 * 만약 매개변수로 설정된 요소중 interface를 상속받은클래스가 2개이상일경우 @qulifier를 설정해야하는데
-	 * 이때 매개변수의 요소 type앞에 작성해주면된다
-	 */
-	public GalleryServiceImplV2(GalleryDao gaDao, FileDao fDao, 
-			@Qualifier("fileServiceV2") FileService fService) {
-		super(gaDao, fDao, fService);
+
+	
+
+	
+	
+	public GalleryServiceImplV2(GalleryDao gaDao, FileDao fDao,@Qualifier("fileServiceV2") FileService fService, PageService pageService) {
+		super(gaDao, fDao, fService, pageService);
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-
 	@Override
-	public GalleryDTO findByIdGallery(Long g_seq) {
+	public GalleryDTO findByIdGellery(Long g_seq) {
 
 		GalleryDTO gallery = gaDao.findByIdGalleryFilesResultMap(g_seq);
 		if(gallery != null) {

@@ -47,34 +47,41 @@
 	}
 
 </style>
-<!DOCTYPE html>
+
 <section class="page_box">
 	<ul class="page_nav_main">
 		<li data-num="1">처음</li>
-		<li data-num="${PAGE_NUM-1 }">&lt;</li>
-		<c:forEach begin="1" end="10" var="pageNum">
+		<li data-num="${PAGE_NUM - 1}">&lt;</li>
+		<c:if test="${PAGE_NAV.startPage>2 }">
+			<li>.....</li>
+		</c:if>
+		<c:forEach begin="${PAGE_NAV.startPage}" end="${PAGE_NAV.endPage}" var="pageNum">
 			<li data-num="${pageNum}"
 			class="
-			<c:if test="${PAGE_NUM==pageNum}">active</c:if>
-			">
-			${pageNum }</li>
+			<c:if test="${PAGE_NUM == pageNum}">active</c:if>
+			"
+			>${pageNum}</li>
 		</c:forEach>
-		<li data-num="${PAGE_NUM+1 }">&gt;</li>
-		<li data-num="99">끝</li>
+		<c:if test="${PAGE_NAV.endPage < PAGE_NAV.totalPages}">
+			<li>.....</li>
+		</c:if>
+		<li data-num="${PAGE_NUM + 1}">&gt;</li>
+		<li data-num="${PAGE_NAV.totalPages}">끝</li>
 	</ul>
-
 </section>
 <script>
-const page_nav_main=document.querySelector("ul.page_nav.main")
-if(page_nav_main){
+const page_nav_main = document.querySelector("ul.page_nav_main")
+if(page_nav_main) {
 	page_nav_main.addEventListener("click",(e)=>{
-		const li=e.target
-		if(li.tagName==="LI"){
-			const pageNum=e.target.dataset.num
-			location.href="${rootPath}/gallery?pageNum="+pageNum;
+		const li = e.target
+		if(li.tagName === "LI") {
+			const pageNum = e.target.dataset.num
+			location.href = "${rootPath}/gallery?pageNum=" + pageNum;
 		}
-		
 	})
-	
 }
+
+
+
+
 </script>

@@ -12,4 +12,6 @@ public interface GalleryDao extends GenericDao<GalleryDTO, Long>{
 	
 	public GalleryDTO findByIdGalleryFilesResultMap (Long g_seq);
 
+	public int countAll();
+
 }
