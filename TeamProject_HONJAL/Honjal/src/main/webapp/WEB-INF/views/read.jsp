@@ -26,6 +26,10 @@
             <img src="${rootPath}/static/images/user.png" class="member_img" />
           </div>
         </div>
+        <!-- 파일 -->
+        <div>
+        
+        </div>
         <div class="content_text">
           <p>${CONTENT.content_text}</p>
         </div>
