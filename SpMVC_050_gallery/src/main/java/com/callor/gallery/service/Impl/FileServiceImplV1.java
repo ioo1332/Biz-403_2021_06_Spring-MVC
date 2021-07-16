@@ -30,14 +30,14 @@ public class FileServiceImplV1 implements FileService{
 	public String fileUp(MultipartFile file) throws Exception {
 
 		// 파일정보에서 파일이름 추출하기
-		String originaFileName = file.getOriginalFilename();
+		String originFileName = file.getOriginalFilename();
 		
 		// 파일 이름이 비어있으면 null을 return
-		if(originaFileName.isEmpty()) {
+		if(originFileName.isEmpty()) {
 			return null;
 		} 
 		
-		log.debug("파일이름 {} ", originaFileName);
+		log.debug("파일이름 {} ", originFileName);
 		
 		// file-context.xml에 설정된 
 		// files 폴더 정보를 가져오기
@@ -67,7 +67,7 @@ public class FileServiceImplV1 implements FileService{
 		 * 막을 수 있다.
 		 */
 		String strUUID = UUID.randomUUID().toString();
-		strUUID += originaFileName;
+		strUUID += originFileName;
 		
 		// 파일업로드할 path와 파일이름을 + 하여
 		// 업로드 준비

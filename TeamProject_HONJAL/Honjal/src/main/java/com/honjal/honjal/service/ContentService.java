@@ -56,7 +56,7 @@ public interface ContentService {
 	
 	
 	public List<ContentFilesDTO> findByIdGalleryFiles(Long g_seq);
-	public ContentFilesDTO findByIdGalleryFilesResultMap(Long g_seq);
+	public ContentFilesDTO findByIdGallery(Long g_seq);
 	
 	public void input(ContentDTO ContentDTO, 
 			MultipartFile one_file, 

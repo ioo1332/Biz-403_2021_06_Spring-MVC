@@ -146,7 +146,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/{menu}/write", method=RequestMethod.POST)
-	public String write(String bcode, HttpSession session, ContentVO contentVO, ContentDTO contentDTO ,MultipartFile one_file, MultipartHttpServletRequest m_file) throws Exception {
+	public String write(String bcode, HttpSession session, ContentVO contentVO, ContentDTO contentDTO ,MultipartFile one_file, MultipartHttpServletRequest m_file,Model model) throws Exception {
 		Date date = new Date(System.currentTimeMillis());
 		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat st = new SimpleDateFormat("hh:mm:ss");
@@ -160,6 +160,9 @@ public class BoardController {
 		contentVO.setContent_time(curTime);
 		contentVO.setContent_view(0);
 		contentVO.setContent_good(0);
+		log.debug("게시물 정보 {}", contentDTO.toString());
+		log.debug("싱글 파일 {}", one_file.getOriginalFilename());
+		log.debug("멀티 파일 {}", m_file.getFileMap().toString());
 		contentService.input(contentDTO, one_file, m_file);
 		
 		contentService.insert(contentVO);

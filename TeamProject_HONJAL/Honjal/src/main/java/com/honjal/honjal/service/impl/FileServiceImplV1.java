@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.honjal.honjal.service.FileService;
 
-import lombok.RequiredArgsConstructor;
+
 
 
 @Service("fileServiceV1")
@@ -27,6 +27,9 @@ public class FileServiceImplV1 implements FileService{
    public String fileUp(MultipartFile file) throws Exception {
       // TODO Auto-generated method stub
       String originFileName=file.getOriginalFilename();
+      if(originFileName.isEmpty()) {
+			return null;
+		} 
       Resource res=resLoader.getResource("/files");
       String filePath=res.getURI().getPath();
       String strUUID=UUID.randomUUID().toString();

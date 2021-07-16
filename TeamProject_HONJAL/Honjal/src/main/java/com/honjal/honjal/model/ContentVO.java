@@ -25,5 +25,7 @@ public class ContentVO {
 	private int content_good;	// 추천수
 	private String content_title;	// 글제목
 	private String content_text;	// 글내용
+	private String content_image;	//VARCHAR(125)	
+
 	
 }

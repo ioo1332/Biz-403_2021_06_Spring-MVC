@@ -14,14 +14,16 @@ import lombok.RequiredArgsConstructor;
 public class FileServiceImplV2 extends FileServiceImplV1{
 	
 	protected final String winPath;
+	protected final String macPath;
 	
 	protected String fileUpPath;
 	
 	@Autowired
-	public void getFilePath(String winPath) {
+	public void getFilePath(String winPath, String macPath) {
 		
 	
 		this.fileUpPath = this.winPath;
+		
 
 	}
 	
@@ -32,8 +34,12 @@ public class FileServiceImplV2 extends FileServiceImplV1{
 		if(originFileName==null||originFileName.isEmpty()) {
 			return "";
 		}
-		File path=new File(fileUpPath);
-		if(path.exists()) {
+		File path = new File(macPath);
+		if (path.exists()) {
+			this.fileUpPath = this.macPath;
+		}
+		path = new File(fileUpPath);
+		if(!path.exists()) {
 			path.mkdirs();
 		}
 		String strUUID=UUID.randomUUID().toString();

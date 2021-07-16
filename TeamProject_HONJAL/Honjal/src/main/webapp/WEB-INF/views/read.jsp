@@ -27,9 +27,19 @@
           </div>
         </div>
         <!-- 파일 -->
-        <div>
-        
-        </div>
+        <div id="gallery_files">
+	<c:forEach items="${FILE.fileList}" var="FILE" >
+		<div class="content_file" data-fseq="${FILE.file_num}">
+			<c:if test="${empty CONTENT.file_upname}">
+				<img src="${rootPath}/files/noImage.png" height="100px" >
+			</c:if>
+			<c:if test="${not empty CONTENT.file_upname}">
+				<img src="${rootPath}/files/${CONTENT.file_upname}">
+			</c:if>
+		</div>
+	</c:forEach>
+</div>
+       
         <div class="content_text">
           <p>${CONTENT.content_text}</p>
         </div>

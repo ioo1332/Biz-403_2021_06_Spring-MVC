@@ -5,6 +5,7 @@
   
  <mapper namespace="com.honjal.honjal.dao.ext.ContentDao">
  
+ 
  	<select id="findByIdContent" parameterType="Integer" resultType="ContentVO">
 		SELECT * FROM tbl_content
 		WHERE content_num = #{content_num}
@@ -28,8 +29,10 @@
 	</select>
 	
  	<insert id="insert" parameterType="ContentVO">
- 		INSERT INTO tbl_content(member_num, member_nname, board_code, content_date, content_time, content_title, content_text, content_view, content_good)
- 		VALUES(#{member_num}, #{member_nname}, #{board_code}, #{content_date}, #{content_time}, #{content_title}, #{content_text}, #{content_view}, #{content_good})
+ 		INSERT INTO tbl_content(member_num, member_nname, board_code, content_date, content_time, content_title, content_text, content_view, content_good,content_image
+ 		)
+ 		VALUES(#{member_num}, #{member_nname}, #{board_code}, #{content_date}, #{content_time}, #{content_title}, #{content_text}, #{content_view}, #{content_good},#{content_image}
+ 		)
  	</insert>
  	
  	<update id="update" parameterType="ContentVO">
@@ -48,5 +51,6 @@
         SET content_view = content_view + 1
         WHERE content_num=#{content_num}
 	</update>
+ 	
  	
  </mapper>

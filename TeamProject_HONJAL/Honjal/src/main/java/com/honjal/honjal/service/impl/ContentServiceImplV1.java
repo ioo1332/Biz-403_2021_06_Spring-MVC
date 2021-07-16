@@ -4,25 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.honjal.honjal.dao.ext.ContentDao;
+import com.honjal.honjal.dao.ext.FileDao;
 import com.honjal.honjal.model.ContentDTO;
 import com.honjal.honjal.model.ContentFilesDTO;
 import com.honjal.honjal.model.ContentListDTO;
 import com.honjal.honjal.model.ContentVO;
+import com.honjal.honjal.model.FileDTO;
 import com.honjal.honjal.service.ContentService;
+import com.honjal.honjal.service.FileService;
 
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @RequiredArgsConstructor
 @Service("contentServiceV1")
 public class ContentServiceImplV1 implements ContentService {
 
 	protected final ContentDao contentDao;
 	protected final SqlSession sqlSession;
+	protected final FileDao fDao;
+	
+	@Qualifier("fileServiceV2")
+	protected final FileService fService;
 	
 	@Override
 	public ContentVO findByIdContent(Integer content_num) {
@@ -122,7 +131,7 @@ public class ContentServiceImplV1 implements ContentService {
 	}
 
 	@Override
-	public ContentFilesDTO findByIdGalleryFilesResultMap(Long g_seq) {
+	public ContentFilesDTO findByIdGallery(Long g_seq) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -131,7 +140,25 @@ public class ContentServiceImplV1 implements ContentService {
 	public void input(ContentDTO ContentDTO, MultipartFile one_file, MultipartHttpServletRequest m_file)
 			throws Exception {
 		// TODO Auto-generated method stub
-		
+		String strUUID = fService.fileUp(one_file);
+		ContentDTO.setFile_image(strUUID);
+		log.debug(" INSERT 전 seq {}", ContentDTO.getContent_num());
+		contentDao.insert(ContentDTO);
+		log.debug(" INSERT 후 seq {}", ContentDTO.getContent_num());
+		Long content_num=ContentDTO.getContent_num();
+		List<FileDTO> files = new ArrayList<FileDTO>();
+		List<MultipartFile>mFiles=m_file.getFiles("m_file");
+		for(MultipartFile file : mFiles) {
+			String fileOriginName = file.getOriginalFilename();
+			String fileUUName = fService.fileUp(file);
+			FileDTO fDto = FileDTO.builder()
+							.content_num(content_num)
+							.file_original(fileOriginName)
+							.file_upname(fileUUName)
+							.build();
+			files.add(fDto);
+		}
+		fDao.insertOrUpdateWithList(files);
 	}
 
 }

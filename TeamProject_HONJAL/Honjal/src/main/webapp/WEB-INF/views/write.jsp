@@ -8,7 +8,7 @@
       display: none;
    }
 </style>
-<form class="write_form" method=POST enctype="multipart/form-data" >
+<form class="write_form" method="POST" enctype="multipart/form-data" >
    <h2 class="board_title">글쓰기</h2>
       <fieldset>
          <div class="write_top">
@@ -47,9 +47,11 @@
                </select>
             </c:otherwise>
          </c:choose>
+         
             <input name="content_title" class="write_title" autofocus/><br />
             <div class="file_box">
-               <label for="ex_file">&#128190;</label> <input type="file" multiple="multiple" name="m_file">
+               <input type="file" multiple="multiple" name="m_file">
+             <!--   <label for="ex_file">&#128190;</label> -->
 			</div>
             </div>
             
