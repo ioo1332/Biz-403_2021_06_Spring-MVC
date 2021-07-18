@@ -21,9 +21,12 @@ CREATE TABLE tbl_content(
 	content_view	INT	NOT NULL,
 	content_good	INT	NOT NULL,
 	content_title	VARCHAR(125)	NOT NULL,
-	content_text	VARCHAR(2000)	NOT NULL	
+	content_text	VARCHAR(2000)	NOT NULL,
+	content_image  VARCHAR(125)
 );
 DROP table tbl_content;
+
+ALTER TABLE tbl_content ADD content_image VARCHAR(125) ;
 
 
 CREATE TABLE tbl_board(
@@ -46,8 +49,11 @@ CREATE TABLE tbl_file(
 	content_num	BIGINT	NOT NULL,
 	member_num	BIGINT	NOT NULL,
 	board_code	 CHAR(4)	NOT NULL,	
-	file_name	VARCHAR(200)	NOT NULL	
+	file_original	VARCHAR(200)		,
+    file_upname     VARCHAR(200)
 );
+
+DROP table tbl_file;
 
 CREATE TABLE tbl_scrap(
 	scrap_num	BIGINT	AUTO_INCREMENT	PRIMARY KEY,

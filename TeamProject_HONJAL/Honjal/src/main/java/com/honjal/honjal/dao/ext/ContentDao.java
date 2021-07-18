@@ -27,6 +27,7 @@ public interface ContentDao extends GenericDao<ContentVO, Integer>{
 	
 	public List<ContentFilesDTO> findByIdGalleryFiles(Long content_num);
 	public ContentDTO  findByIdGalleryFilesResultMap(Long content_num);
+	public int viewCount(String board_code);
 
 	
 }

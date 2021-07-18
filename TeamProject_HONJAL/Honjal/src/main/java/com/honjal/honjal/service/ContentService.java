@@ -61,4 +61,6 @@ public interface ContentService {
 	public void input(ContentDTO ContentDTO, 
 			MultipartFile one_file, 
 			MultipartHttpServletRequest m_file) throws Exception;
+
+	public int viewCount(String content_num);
 }

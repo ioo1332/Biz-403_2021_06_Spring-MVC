@@ -33,7 +33,7 @@ public class BoardController {
 	protected final ContentService contentService;
 
 	@RequestMapping(value={"/{menu}","/{menu}/"}, method=RequestMethod.GET)
-	public String board(@PathVariable("menu") String menu, Model model, HttpSession session) {
+	public String board(@PathVariable("menu") String menu, Model model, HttpSession session, String board_code) {
 		
 		String menu_str = menu.toUpperCase();
 		String[] menu_arr = menu_str.split("-");
@@ -45,6 +45,10 @@ public class BoardController {
 		
 		if(menu_arr.length > 1) menu_str = menu_arr[0];
 		// /TIP-1로 넘어오면 menu_str에 TIP만 담김
+		
+		List<ContentListDTO> contentDTO = contentService.menuContent(board_code);
+		contentService.viewCount(board_code);
+		model.addAttribute("CONTENT",contentDTO);
 		
 		model.addAttribute("SESSION", session.getAttribute("MEMBER"));
 		model.addAttribute("BODY", "BOARD_MAIN");
@@ -170,8 +174,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/read", method=RequestMethod.GET)
-	public String read(Integer content_num, Model model, HttpSession session) {
+	public String read(Integer content_num, Model model, HttpSession session,String board_code) {
 		ContentVO contentVO = contentService.findByIdContent(content_num);
+		
 		model.addAttribute("CONTENT",contentVO);
 		model.addAttribute("SESSION", session.getAttribute("MEMBER"));
 		model.addAttribute("BODY", "READ");

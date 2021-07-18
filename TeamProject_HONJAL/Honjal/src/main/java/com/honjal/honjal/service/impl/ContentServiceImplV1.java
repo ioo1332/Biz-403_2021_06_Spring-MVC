@@ -115,7 +115,7 @@ public class ContentServiceImplV1 implements ContentService {
 	@Override
 	public void view_count(int content_num) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("content-mapper.view_count", content_num);
+		
 	}
 	
 	//제목옆댓글수
@@ -159,6 +159,13 @@ public class ContentServiceImplV1 implements ContentService {
 			files.add(fDto);
 		}
 		fDao.insertOrUpdateWithList(files);
+	}
+
+	@Override
+	public int viewCount(String board_code) {
+		// TODO Auto-generated method stub
+		return contentDao.viewCount(board_code);
+		
 	}
 
 }
