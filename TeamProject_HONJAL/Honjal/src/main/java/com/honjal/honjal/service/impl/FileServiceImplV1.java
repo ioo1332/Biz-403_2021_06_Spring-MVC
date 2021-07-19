@@ -52,11 +52,5 @@ public class FileServiceImplV1 implements FileService{
       return fileNames;
    }
 
-   @Override
-   public List<String> fileUp(MultipartFile file, MultipartHttpServletRequest files) throws Exception {
-      // TODO Auto-generated method stub
-      return null;
-   }
-
    
 }

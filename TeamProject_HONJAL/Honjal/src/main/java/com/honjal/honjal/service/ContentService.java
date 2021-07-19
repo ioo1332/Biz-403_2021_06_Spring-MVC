@@ -49,18 +49,13 @@ public interface ContentService {
 	public List<ContentListDTO> MyContent(Integer member_num);
 	// 내가 쓴 글 보기
 	
-
-	public void view_count(int content_view) throws Exception;
-	
-	public void comment_count (int content_view)throws Exception;
-	
-	
 	public List<ContentFilesDTO> findByIdGalleryFiles(Long g_seq);
 	public ContentFilesDTO findByIdGallery(Long g_seq);
 	
-	public void input(ContentDTO ContentDTO, 
+	public void input(ContentDTO contentDTO, 
 			MultipartFile one_file, 
 			MultipartHttpServletRequest m_file) throws Exception;
-
-	public int viewCount(String content_num);
+	
+	public void view_count(int content_view) throws Exception;
+	public void comment_count (int content_view)throws Exception;
 }

@@ -21,13 +21,11 @@ public interface ContentDao extends GenericDao<ContentVO, Integer>{
 	
 	public List<ContentListDTO> searchTitleContent(String menu, String search_word);
 	
-	public void view_count(int content_num) throws Exception;
-	
-	public void comment_count(int content_num)throws Exception;
-	
 	public List<ContentFilesDTO> findByIdGalleryFiles(Long content_num);
 	public ContentDTO  findByIdGalleryFilesResultMap(Long content_num);
-	public int viewCount(String board_code);
+	
+	public void view_count(int content_num) throws Exception;
+	public void comment_count(int content_num)throws Exception;
 
 	
 }

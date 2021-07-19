@@ -26,6 +26,7 @@ public class ContentVO {
 	private String content_title;	// 글제목
 	private String content_text;	// 글내용
 	private String content_image;	//VARCHAR(125)	
+	private int reply_count;
 
 	
 }

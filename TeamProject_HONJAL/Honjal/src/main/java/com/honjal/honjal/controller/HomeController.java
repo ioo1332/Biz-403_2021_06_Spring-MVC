@@ -34,6 +34,15 @@ public class HomeController {
 		model.addAttribute("CONTENTS",list);
 		return "home";
 	}
+	/*
+	@RequestMapping(value = {"/",""},method = RequestMethod.POST)
+	public String home(	MultipartHttpServletRequest m_file,Model model) throws Exception {
+		
+		List<String>fileNames=fileService.filesUp(m_file);
+		model.addAttribute("FILES", fileNames);		
+		return "home";
+		
+	}
 	
 	@RequestMapping(value = "/sub", method = RequestMethod.POST)
 	public String home(
@@ -43,6 +52,6 @@ public class HomeController {
 		List<MultipartFile> files = m_file.getFiles("m_file");
 		
 		return "home";
-}
-
+	}
+*/
 }

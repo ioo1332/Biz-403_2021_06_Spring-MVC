@@ -111,19 +111,6 @@ public class ContentServiceImplV1 implements ContentService {
 		return null;
 	}
 	
-	
-	@Override
-	public void view_count(int content_num) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	//제목옆댓글수
-	@Override
-	public void comment_count(int content_view) throws Exception {
-		
-	}
-
 	@Override
 	public List<ContentFilesDTO> findByIdGalleryFiles(Long g_seq) {
 		// TODO Auto-generated method stub
@@ -137,35 +124,42 @@ public class ContentServiceImplV1 implements ContentService {
 	}
 
 	@Override
-	public void input(ContentDTO ContentDTO, MultipartFile one_file, MultipartHttpServletRequest m_file)
+	public void input(ContentDTO contentDTO, MultipartFile one_file, MultipartHttpServletRequest m_file)
 			throws Exception {
 		// TODO Auto-generated method stub
 		String strUUID = fService.fileUp(one_file);
-		ContentDTO.setFile_image(strUUID);
-		log.debug(" INSERT 전 seq {}", ContentDTO.getContent_num());
-		contentDao.insert(ContentDTO);
-		log.debug(" INSERT 후 seq {}", ContentDTO.getContent_num());
-		Long content_num=ContentDTO.getContent_num();
+		contentDTO.setFile_image(strUUID);
+		log.debug(" INSERT 전 seq {}", contentDTO.getContent_num());
+		contentDao.insert(contentDTO);
+		log.debug(" INSERT 후 seq {}", contentDTO.getContent_num());
+		Long content_num=contentDTO.getContent_num();
 		List<FileDTO> files = new ArrayList<FileDTO>();
 		List<MultipartFile>mFiles=m_file.getFiles("m_file");
 		for(MultipartFile file : mFiles) {
 			String fileOriginName = file.getOriginalFilename();
 			String fileUUName = fService.fileUp(file);
-			FileDTO fDto = FileDTO.builder()
+			FileDTO fDTO = FileDTO.builder()
 							.content_num(content_num)
 							.file_original(fileOriginName)
 							.file_upname(fileUUName)
 							.build();
-			files.add(fDto);
+			files.add(fDTO);
 		}
 		fDao.insertOrUpdateWithList(files);
 	}
-
-	@Override
-	public int viewCount(String board_code) {
-		// TODO Auto-generated method stub
-		return contentDao.viewCount(board_code);
+	
+	// 조회수
+		@Override
+		public void view_count(int content_num) throws Exception {
+			// TODO Auto-generated method stub
+			
+		}
 		
-	}
+		// 제목옆댓글수
+		@Override
+		public void comment_count(int content_view) throws Exception {
+			
+		}
+
 
 }

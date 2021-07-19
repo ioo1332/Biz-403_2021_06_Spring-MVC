@@ -20,11 +20,8 @@ public class FileServiceImplV2 extends FileServiceImplV1{
 	
 	@Autowired
 	public void getFilePath(String winPath, String macPath) {
-		
 	
 		this.fileUpPath = this.winPath;
-		
-
 	}
 	
 

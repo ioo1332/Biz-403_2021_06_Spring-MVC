@@ -28,6 +28,7 @@ public class ContentDTO {
 	private String content_title;	// 글제목
 	private String content_text;	// 글내용
 	private String file_image;
+	private int reply_count;
 	
 	List<FileDTO> fileList;
 }

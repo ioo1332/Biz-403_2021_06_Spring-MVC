@@ -46,7 +46,7 @@
  	</delete>
  	
  	<!-- 조회수 -->
- 	<update id="viewCount" parameterType="ContentVO">
+ 	<update id="viewCount" parameterType="int">
         UPDATE tbl_content
         SET content_view = content_view + 1
         WHERE board_code=#{board_code}

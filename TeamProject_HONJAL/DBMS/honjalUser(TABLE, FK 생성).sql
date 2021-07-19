@@ -26,6 +26,10 @@ CREATE TABLE tbl_content(
 );
 DROP table tbl_content;
 
+alter table tbl_content add reply_count int DEFAULT '0';
+
+ALTER TABLE tbl_content ALTER COLUMN content_view SET DEFAULT 0;
+
 ALTER TABLE tbl_content ADD content_image VARCHAR(125) ;
 
 
@@ -97,6 +101,9 @@ ALTER TABLE tbl_content
 ADD CONSTRAINT fk_board_code
 FOREIGN KEY (board_code) 
 REFERENCES tbl_board(board_code); 
+
+
+
 
 
 

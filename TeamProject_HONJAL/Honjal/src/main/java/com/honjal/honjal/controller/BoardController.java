@@ -6,11 +6,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -26,14 +28,13 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/board")
+@RequestMapping(value="/board")
 @Controller
 public class BoardController {
-	
 	protected final ContentService contentService;
 
 	@RequestMapping(value={"/{menu}","/{menu}/"}, method=RequestMethod.GET)
-	public String board(@PathVariable("menu") String menu, Model model, HttpSession session, String board_code) {
+	public String board(@PathVariable("menu") String menu, Model model, HttpSession session, String board_code) throws Exception {
 		
 		String menu_str = menu.toUpperCase();
 		String[] menu_arr = menu_str.split("-");
@@ -47,7 +48,7 @@ public class BoardController {
 		// /TIP-1로 넘어오면 menu_str에 TIP만 담김
 		
 		List<ContentListDTO> contentDTO = contentService.menuContent(board_code);
-		contentService.viewCount(board_code);
+		
 		model.addAttribute("CONTENT",contentDTO);
 		
 		model.addAttribute("SESSION", session.getAttribute("MEMBER"));
@@ -164,10 +165,7 @@ public class BoardController {
 		contentVO.setContent_time(curTime);
 		contentVO.setContent_view(0);
 		contentVO.setContent_good(0);
-		log.debug("게시물 정보 {}", contentDTO.toString());
-		log.debug("싱글 파일 {}", one_file.getOriginalFilename());
-		log.debug("멀티 파일 {}", m_file.getFileMap().toString());
-		contentService.input(contentDTO, one_file, m_file);
+		
 		
 		contentService.insert(contentVO);
 		return "redirect:/board/{menu}";
