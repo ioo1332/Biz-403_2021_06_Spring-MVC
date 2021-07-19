@@ -56,6 +56,10 @@ public interface ContentService {
 			MultipartFile one_file, 
 			MultipartHttpServletRequest m_file) throws Exception;
 	
-	public void view_count(int content_view) throws Exception;
+	public void view_count(int board_code) throws Exception;
 	public void comment_count (int content_view)throws Exception;
+	
+	public void boardHitsUpdate(int content_num); 
+	
+
 }

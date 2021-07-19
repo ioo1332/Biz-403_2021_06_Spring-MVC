@@ -150,8 +150,14 @@ public class ContentServiceImplV1 implements ContentService {
 	
 	// 조회수
 		@Override
-		public void view_count(int content_num) throws Exception {
+		public void view_count(int board_code) throws Exception {
 			// TODO Auto-generated method stub
+			 sqlSession.selectOne("board.detail",board_code);
+			return;
+
+
+			
+			
 			
 		}
 		
@@ -159,6 +165,14 @@ public class ContentServiceImplV1 implements ContentService {
 		@Override
 		public void comment_count(int content_view) throws Exception {
 			
+		}
+
+		@Override
+		public void boardHitsUpdate(int content_num) {
+			// TODO Auto-generated method stub
+			sqlSession.update("viewCount", content_num);
+
+		
 		}
 
 

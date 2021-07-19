@@ -101,7 +101,7 @@
 			<c:when test="${MENU == 'NOT' || MENU == 'INF' || MENU == 'QNA'}">
 				<c:forEach items="${CONTENTS}" var="CONTENT">
 					<tr data-cnum="${CONTENT.content_num}">
-						<td class="content_num">${CONTENT.content_num}</td>
+						<td class="content_num"><a href="read?content_num=${content_num}">${CONTENT.content_num}</a></td>
 						<td class="content_title">${CONTENT.content_title}</td>
 						<td class="member_nname">${CONTENT.member_nname}</td>
 						<td class="content_date">${CONTENT.content_date}</td>
