@@ -51,6 +51,10 @@
   outline: 0;
 }
 
+body {
+	overflow: scroll;
+}
+
 .main_box, #join_form, .write_form {
 	font-family: "NanumBarunGothic";
   width: 1050px;
@@ -79,25 +83,30 @@ footer {
   line-height: 5;
 }
 
+.current_menu {
+	border-bottom: 3px solid #d6b26e;
+	color: #d6b26e;
+}
+
 </style>
 <link href="${rootPath}/static/css/nav.css?ver=2021-07-15-001" rel="stylesheet" />
-<link href="${rootPath}/static/css/main.css?ver=2021-07-07-001" rel="stylesheet" />
+<link href="${rootPath}/static/css/main.css?ver=2021-07-19-008" rel="stylesheet" />
 <link href="${rootPath}/static/css/board.css?ver=2021-07-15-004" rel="stylesheet" />
 <link href="${rootPath}/static/css/join.css?ver=2021-07-07-001" rel="stylesheet" />
-<link href="${rootPath}/static/css/read.css?ver=2021-07-15-001" rel="stylesheet" />
+<link href="${rootPath}/static/css/read.css?ver=2021-07-18-001" rel="stylesheet" />
 <link href="${rootPath}/static/css/write_admin.css?ver=2021-07-07-001" rel="stylesheet" />
 </head>
 <body>
 	<header>
 		<img src="${rootPath}/static/images/logo_v5.jpg">
 		<ul id="menu_box">
-			<li class="menu_list">공지사항</li>
-			<li class="menu_list">정보게시판</li>
-			<li class="menu_list">생활 TIP</li>
-			<li class="menu_list">랜선집들이</li>
-			<li class="menu_list">혼잘TALK</li>
-			<li class="menu_list">리뷰게시판</li>
-			<li class="menu_list">자취 Q&amp;A</li>
+			<li class="menu_list <c:if test="${MENU == 'NOT'}">current_menu</c:if>">공지사항</li>
+			<li class="menu_list <c:if test="${MENU == 'INF'}">current_menu</c:if>">정보게시판</li>
+			<li class="menu_list <c:if test="${MENU == 'TIP'}">current_menu</c:if>">생활 TIP</li>
+			<li class="menu_list <c:if test="${MENU == 'INT'}">current_menu</c:if>">랜선집들이</li>
+			<li class="menu_list <c:if test="${MENU == 'TAL'}">current_menu</c:if>">혼잘TALK</li>
+			<li class="menu_list <c:if test="${MENU == 'REV'}">current_menu</c:if>">리뷰게시판</li>
+			<li class="menu_list <c:if test="${MENU == 'QNA'}">current_menu</c:if>">자취 Q&amp;A</li>
 		</ul>
 	</header>
 	<section id="main_sec">

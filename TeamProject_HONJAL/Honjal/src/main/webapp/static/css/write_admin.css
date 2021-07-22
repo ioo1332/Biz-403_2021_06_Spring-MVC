@@ -56,8 +56,9 @@
   border-radius: 0.25em;
   cursor: pointer;
 }
- /* 파일 필드 숨기기
+
 .file_box input[type="file"] {
+  /* 파일 필드 숨기기 */
   position: absolute;
   width: 1px;
   height: 1px;
@@ -67,7 +68,7 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
- */
+
 .write_text {
 	width: 100%;
   height: 300px;

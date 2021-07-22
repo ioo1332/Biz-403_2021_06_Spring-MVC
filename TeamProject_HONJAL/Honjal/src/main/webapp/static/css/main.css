@@ -91,21 +91,6 @@
   display: block;
 }
 
-.btn {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-}
-
-.left {
-  left: 20px;
-}
-
-.right {
-  right: 7px;
-}
-
 #circleBox {
   display: flex;
   position: absolute;
@@ -174,16 +159,31 @@
   width: 60%;
 }
 
-.list_best, .list_data {
+.list_best, .list_info {
   line-height: 2.3;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: black;
 }
 
-.list_best:hover,
-.list_data:hover {
+.list_best a
+.list_info a {
+	color: black;
+}
+
+a:link {
+	color: black;
+}
+
+a:visited {
+	color: black;
+}
+
+.list_best a:hover,
+.list_info a:hover {
   text-decoration: underline;
+  color: black;
   cursor: pointer;
 }
 

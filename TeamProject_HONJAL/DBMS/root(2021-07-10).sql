@@ -75,6 +75,16 @@ CREATE TABLE tbl_scrap(
 DROP TABLE tbl_scrap;
 SELECT * FROM tbl_scrap;
 
+CREATE TABLE tbl_good(
+	content_num BIGINT NOT NULL,
+    member_num BIGINT NOT NULL,
+CONSTRAINT FOREIGN KEY(content_num)
+REFERENCES tbl_content(content_num)
+ON DELETE CASCADE,
+CONSTRAINT FOREIGN KEY(member_num)
+REFERENCES tbl_member(member_num)
+ON DELETE CASCADE
+);
 
 
 
@@ -229,3 +239,39 @@ WHERE board_code LIKE CONCAT("TIP",'%')
 ORDER BY content_good DESC LIMIT 5;
 
 SELECT * FROM tbl_member;
+
+SELECT * FROM tbl_content
+		WHERE board_code LIKE CONCAT("tal", '%')
+		ORDER BY content_num DESC;
+        
+        
+SELECT * FROM tbl_content;
+
+UPDATE tbl_content
+SET content_good = content_good+1
+WHERE content_num = 100;
+
+SELECT COUNT(content_num) FROM tbl_good WHERE content_num = 100;
+
+SELECT * FROM tbl_good;
+
+DELETE FROM tbl_good
+WHERE content_num = 122 AND member_num = 1;
+
+UPDATE tbl_content
+SET content_good = content_good+1
+WHERE content_num = 122;
+
+SELECT * FROM tbl_content WHERE content_num = 122;
+
+-- 인기글
+-- 5개만, 추천수많은순서대로, 일주일이내일것
+SELECT *
+FROM tbl_content
+WHERE content_date BETWEEN DATE_ADD(NOW(), INTERVAL-1 WEEK ) AND NOW()
+ORDER BY content_good DESC
+LIMIT 5;
+
+SELECT * FROM tbl_content
+WHERE board_code LIKE CONCAT("INF", '%')
+ORDER BY content_num DESC;

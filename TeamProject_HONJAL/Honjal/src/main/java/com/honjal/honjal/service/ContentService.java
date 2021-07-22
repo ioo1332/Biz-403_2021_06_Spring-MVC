@@ -2,13 +2,12 @@ package com.honjal.honjal.service;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.ui.Model;
 
-import com.honjal.honjal.model.ContentDTO;
-import com.honjal.honjal.model.ContentFilesDTO;
+import com.honjal.honjal.model.BestContentVO;
 import com.honjal.honjal.model.ContentListDTO;
 import com.honjal.honjal.model.ContentVO;
+import com.honjal.honjal.model.GoodVO;
 
 public interface ContentService {
 	
@@ -25,41 +24,26 @@ public interface ContentService {
 	// 글삭제
 	
 	
+	public List<ContentListDTO> contentMenuAllPage(String board_code, int pageNum, Model model);
+	// 페이지네이션 적용된 메뉴별 글 리스트 (각 게시판, 전체게시판에서도 사용)
 	
-	public List<ContentListDTO> allContent();
-	// 올라오는 모든 글 리스트 (메인화면 최신글목록에서 사용)
+	public int checkGood(GoodVO goodVO);
 	
-	public List<ContentListDTO> menuContent(String board_code);
-	// 메뉴별 글 리스트 (각 게시판에서 사용)
+	public void insertGood(GoodVO goodVO);
+	// 추천
+	public void deleteGood(GoodVO goodVO);
+	// 추천 취소
+//	public int getGood(Integer content_num);
+	// 추천수 조회
 	
-	public List<ContentListDTO> menuContentPage(String board_code, int pageNum);
-	// 페이지네이션 적용된 메뉴별 글 리스트 (각 게시판에서 사용)
+	
+	public List<BestContentVO> bestContent();
+	// [메인화면] 최근 일주일 인기글
+	public List<ContentListDTO> infoContent();
+	// [메인화면] 정보 게시판 글 랜덤 5개
 	
 	
-	
-	public List<ContentListDTO> searchTitleContent(String menu, String title);
-	// 글검색 (제목으로)
-	
-	public List<ContentListDTO> searchTextContent(String text);
-	// 글검색 (내용으로)
-	
-	public List<ContentListDTO> searchNameContent(String name);
-	// 글검색 (작성자로)
-	
-	public List<ContentListDTO> MyContent(Integer member_num);
-	// 내가 쓴 글 보기
-	
-	public List<ContentFilesDTO> findByIdGalleryFiles(Long g_seq);
-	public ContentFilesDTO findByIdGallery(Long g_seq);
-	
-	public void input(ContentDTO contentDTO, 
-			MultipartFile one_file, 
-			MultipartHttpServletRequest m_file) throws Exception;
-	
-	public void view_count(int board_code) throws Exception;
-	public void comment_count (int content_view)throws Exception;
-	
-	public void boardHitsUpdate(int content_num); 
-	
+	public int view_count(ContentVO contentVO);
+	// 조회수
 
 }

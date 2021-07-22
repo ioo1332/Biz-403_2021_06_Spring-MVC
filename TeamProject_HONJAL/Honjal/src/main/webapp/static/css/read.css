@@ -100,10 +100,8 @@
   justify-content: center;
 }
 
-.good {
+#good {
 	width: 60px;
-  background-color: #e3ecc8;
-  border-radius: 50px;
   margin: auto;
   cursor: pointer;
 }

@@ -13,13 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ContentReadDTO {
-
-	private String content_title;
-	private int content_good;
-	private String content_date;
-	private String content_time;
-	private String member_nname;
-	private String content_text;
-	
+public class GoodVO {
+	private Integer content_num;
+	private Integer member_num;
 }

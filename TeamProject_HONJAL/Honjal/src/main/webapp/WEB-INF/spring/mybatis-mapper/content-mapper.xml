@@ -4,21 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
  <mapper namespace="com.honjal.honjal.dao.ext.ContentDao">
-
  
  	<select id="findByIdContent" parameterType="Integer" resultType="ContentVO">
 		SELECT * FROM tbl_content
 		WHERE content_num = #{content_num}
 	</select>
 
-	<select id="allContent" resultType="ContentListDTO">
+ 	<select id="contentMenuAllPage" parameterType="String" resultType="ContentListDTO">
 		SELECT * FROM tbl_content
-		ORDER BY content_num DESC
-	</select>
-
- 	<select id="menuContent" parameterType="String" resultType="ContentListDTO">
-		SELECT * FROM tbl_content
-		WHERE board_code LIKE CONCAT(#{board_code}, '%')
+		WHERE board_code LIKE CONCAT(#{menu}, '%')
 		ORDER BY content_num DESC
 	</select>
 	
@@ -29,10 +23,8 @@
 	</select>
 	
  	<insert id="insert" parameterType="ContentVO">
- 		INSERT INTO tbl_content(member_num, member_nname, board_code, content_date, content_time, content_title, content_text, content_view, content_good,content_image
- 		)
- 		VALUES(#{member_num}, #{member_nname}, #{board_code}, #{content_date}, #{content_time}, #{content_title}, #{content_text}, #{content_view}, #{content_good},#{content_image}
- 		)
+ 		INSERT INTO tbl_content(member_num, member_nname, board_code, content_date, content_time, content_title, content_text, content_view, content_good)
+ 		VALUES(#{member_num}, #{member_nname}, #{board_code}, #{content_date}, #{content_time}, #{content_title}, #{content_text}, #{content_view}, #{content_good})
  	</insert>
  	
  	<update id="update" parameterType="ContentVO">
@@ -45,12 +37,18 @@
  		DELETE FROM tbl_content WHERE content_num = #{content_num}
  	</delete>
  	
- 	<!-- 조회수 -->
- 	<update id="viewCount" parameterType="int">
+ 	<select id="bestContent" resultType="BestContentVO">
+ 		SELECT content_num, content_title
+ 		FROM tbl_content
+ 		WHERE content_date BETWEEN DATE_ADD(NOW(), INTERVAL-1 WEEK) AND NOW()
+ 		ORDER BY content_good DESC
+ 		LIMIT 5
+ 	</select>
+ 	
+ 	<update id="view_count" parameterType="int">
         UPDATE tbl_content
         SET content_view = content_view + 1
-        WHERE board_code=#{board_code}
+        WHERE content_num=#{content_num}
 	</update>
- 	
  	
  </mapper>

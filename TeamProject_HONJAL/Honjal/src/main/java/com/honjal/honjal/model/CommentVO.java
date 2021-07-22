@@ -15,9 +15,9 @@ import lombok.ToString;
 @Builder
 public class CommentVO {
 
-	private String comment_num;		// 댓글번호
-	private String content_num;		// 글번호
-	private String member_num;		// 글쓴 유저번호
+	private Integer comment_num;		// 댓글번호
+	private Integer content_num;		// 글번호
+	private Integer member_num;		// 글쓴 유저번호
 	private String board_code;		// 게시판코드
 	private String comment_writer;	// 댓글작성자
 	private String comment_text;	// 댓글내용

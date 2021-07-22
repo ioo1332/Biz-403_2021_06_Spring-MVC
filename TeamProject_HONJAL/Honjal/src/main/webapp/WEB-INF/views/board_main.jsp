@@ -3,14 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="rootPath" value="${pageContext.request.contextPath}" />
 <style>
-	* {
-		list-style: none;
-	}
-	
-	.page_ul {
-		display: flex;
-	}
-	
+* {
+	list-style: none;
+}
+.hidden {
+	display: none;
+}
+
 </style>
 
 <article class="main_box">
@@ -57,8 +56,9 @@
 
 			<c:choose>
 				<c:when test="${MENU == 'TIP'}">
-					<th width="10%" class="content_head">말머리 <select class="content_head">
-							<option selected>전체</option>
+					<th width="10%" class="content_head">말머리 <select class="content_head" name="content_head">
+							<option class="hidden"></option>
+							<option value="tip">전체</option>
 							<option value="TIP-1">청소 &amp;세탁</option>
 							<option value="TIP-2">요리</option>
 							<option value="TIP-3">공간활용</option>
@@ -67,16 +67,18 @@
 					</th>
 				</c:when>
 				<c:when test="${MENU == 'TAL'}">
-					<th width="10%" class="content_head">말머리 <select class="content_head">
-							<option selected>전체</option>
+					<th width="10%" class="content_head">말머리 <select class="content_head" name="content_head">
+							<option class="hidden"></option>
+							<option value="tal">전체</option>
 							<option value="TAL-1">정보TALK</option>
 							<option value="TAL-2">자유TALK</option>
 					</select>
 					</th>
 				</c:when>
 				<c:when test="${MENU == 'REV'}">
-					<th width="10%" class="content_head">말머리 <select class="content_head">
-							<option selected>전체</option>
+					<th width="10%" class="content_head">말머리 <select class="content_head" name="content_head">
+							<option class="hidden"></option>
+							<option value="rev">전체</option>
 							<option value="REV-1">생활용품</option>
 							<option value="REV-2">음식점</option>
 							<option value="REV-3">기타</option>
@@ -101,10 +103,15 @@
 			<c:when test="${MENU == 'NOT' || MENU == 'INF' || MENU == 'QNA'}">
 				<c:forEach items="${CONTENTS}" var="CONTENT">
 					<tr data-cnum="${CONTENT.content_num}">
-						<td class="content_num"><a href="read?content_num=${content_num}">${CONTENT.content_num}</a></td>
+						<td class="content_num">${CONTENT.content_num}</td>
 						<td class="content_title">${CONTENT.content_title}</td>
 						<td class="member_nname">${CONTENT.member_nname}</td>
-						<td class="content_date">${CONTENT.content_date}</td>
+						<td class="content_date">
+							<c:choose>
+								<c:when test="${TODAY == CONTENT.content_date}">${CONTENT.content_time.substring(0,5)}</c:when> 
+								<c:otherwise>${CONTENT.content_date}</c:otherwise>
+							</c:choose>
+						</td>
 						<td class="content_view">${CONTENT.content_view}</td>
 					</tr>
 				</c:forEach>
@@ -126,7 +133,12 @@
 						</td>
 						<td class="content_title">${CONTENT.content_title}</td>
 						<td class="member_nname">${CONTENT.member_nname}</td>
-						<td class="content_date">${CONTENT.content_date}</td>
+						<td class="content_date">
+							<c:choose>
+								<c:when test="${TODAY == CONTENT.content_date}">${CONTENT.content_time.substring(0,5)}</c:when> 
+								<c:otherwise>${CONTENT.content_date}</c:otherwise>
+							</c:choose>
+						</td>
 						<td class="content_view">${CONTENT.content_view}</td>
 						<td class="content_good">${CONTENT.content_good}</td>
 					</tr>
@@ -144,7 +156,12 @@
 						</td>
 						<td class="content_title">${CONTENT.content_title}</td>
 						<td class="member_nname">${CONTENT.member_nname}</td>
-						<td class="content_date">${CONTENT.content_date}</td>
+						<td class="content_date">
+							<c:choose>
+								<c:when test="${TODAY == CONTENT.content_date}">${CONTENT.content_time.substring(0,5)}</c:when> 
+								<c:otherwise>${CONTENT.content_date}</c:otherwise>
+							</c:choose>
+						</td>
 						<td class="content_view">${CONTENT.content_view}</td>
 					</tr>
 				</c:forEach>
@@ -155,7 +172,12 @@
 						<td class="content_num">${CONTENT.content_num}</td>
 						<td class="content_title">${CONTENT.content_title}</td>
 						<td class="member_nname">${CONTENT.member_nname}</td>
-						<td class="content_date">${CONTENT.content_date}</td>
+						<td class="content_date">
+							<c:choose>
+								<c:when test="${TODAY == CONTENT.content_date}">${CONTENT.content_time.substring(0,5)}</c:when> 
+								<c:otherwise>${CONTENT.content_date}</c:otherwise>
+							</c:choose>
+						</td>
 						<td class="content_view">${CONTENT.content_view}</td>
 						<td class="content_good">${CONTENT.content_good}</td>
 					</tr>
@@ -167,7 +189,7 @@
 	<div class="btn_write_box">
 	<c:choose>
 		<c:when test="${MENU == 'NOT' or MENU == 'INF'}">
-			<c:if test="${SESSION.member_level <= 0}">
+			<c:if test="${MEMBER.member_level <= 0}">
 				<button class="btn_write">글쓰기</button>
 			</c:if>
 		</c:when>
@@ -175,26 +197,15 @@
 			<button class="btn_write">글쓰기</button>
 		</c:otherwise>
 	</c:choose>
-	
-	
 	<!-- 공지사항, 정보게시판은 작성자에게만 글쓰기 버튼 보이게 -->
 	</div>
-	<div class="paging_box">
-		<ul class="page_ul">
-			<li data-pnum="1">&lt;&lt;</li>
-			<li data-pnum="${PAGE_NUM - 1}">&lt;</li>
-			<c:forEach begin="1" end="10" var="pageNum">
-				<li data-pnum="${pageNum}" class="<c:if test="${PAGE_NUM == pageNum}">active</c:if>"></li>
-			</c:forEach>
-			<li data-pnum="${PAGE_NUM + 1}">&gt;</li>
-			<li data-pnum="99">&gt;&gt;</li>
-		</ul>
-	</div>
 	
+	<%@ include file="/WEB-INF/views/include/include_page_nav.jspf" %>
 	
 </article>
 
 <script>
+
 let rootPath = "${rootPath}/board"
 let button_write = document.querySelector(".btn_write")
 
@@ -212,71 +223,36 @@ type.addEventListener("change",(e)=>{
 
 if(button_write) {
 	button_write.addEventListener("click",(e)=>{
-		fetch(rootPath + "/write")
-			.then(response=>response.text())
-			.then(result=>{
-				if(result === "NULL") {
-					if(confirm("로그인 후 이용 가능합니다")) {
-						location.href = "${rootPath}"
-					}
-				} else if(result === "OK") {
-					if(${MENU == 'NOT'}) {
-						rootPath += "/not"
-					} else if(${MENU == 'INF'}) {
-						rootPath += "/inf"
-					} else if(${MENU == 'TIP'}) {
-						rootPath += "/tip"
-					} else if(${MENU == 'INT'}) {
-						rootPath += "/int"
-					} else if(${MENU == 'TAL'}) {
-						rootPath += "/tal"
-					} else if(${MENU == 'REV'}) {
-						rootPath += "/rev"
-					} else if(${MENU == 'QNA'}) {
-						rootPath += "/qna"
-					}
-					location.href = rootPath + "/write";
-				}
-			})
-	})
-}
-
-
-let table = document.querySelector(".board")
-if(table) {
-	table.addEventListener("click",(e)=>{
-		let rootPath = "${rootPath}/board";
-		let target = e.target
-		if(target.tagName === "TD") {
-			let tr = target.closest("TR")
-			let cNum = tr.dataset.cnum
-			/*
-			if(${MENU == 'NOTICE'}) {
-				rootPath += '/notice'
-			} else if(${MENU == 'INFO'}) {
-				rootPath += "/info"
-			} else if(${MENU == 'TIP'}) {
-				rootPath += "/tip"
-			} else if(${MENU == 'INTERIOR'}) {
-				rootPath += "/interior"
-			} else if(${MENU == 'TALK'}) {
-				rootPath += "/talk"
-			} else if(${MENU == 'REVIEW'}) {
-				rootPath +="/review"
-			} else if(${MENU == 'QNA'}) {
-				rootPath += "/qna"
+		if("${MEMBER}") {
+			location.href = "${rootPath}" + menu + "/write";
+		} else {
+			if(confirm("로그인 후 이용 가능합니다")) {
+				location.href = "${rootPath}"
 			}
-			*/
-			location.href = rootPath + "/read?content_num=" + cNum;
 		}
 	})
 }
 
-let select = document.querySelector("select.content_head")
-if(select) {
-	select.addEventListener("change",(e)=>{
-		let value = e.target.value
-		location.href = "${rootPath}/board/" + value
+let table = document.querySelector(".board")
+if(table) {
+	table.addEventListener("click",(e)=>{
+		let target = e.target
+		if(target.tagName === "TD") {
+			let tr = target.closest("TR")
+			let cNum = tr.dataset.cnum
+			location.href = "${rootPath}/board/read?content_num=" + cNum;
+		}
 	})
 }
+
+let head_select = document.querySelector("select[name='content_head']")
+if(head_select) {
+	head_select.addEventListener("change",(e)=>{
+		let head = head_select.value
+		location.href = "${rootPath}/board/" + head
+	})
+}
+
+
+
 </script>

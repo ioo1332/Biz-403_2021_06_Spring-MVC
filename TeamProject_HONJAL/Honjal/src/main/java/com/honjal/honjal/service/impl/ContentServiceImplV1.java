@@ -1,37 +1,33 @@
 package com.honjal.honjal.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.ui.Model;
 
 import com.honjal.honjal.dao.ext.ContentDao;
-import com.honjal.honjal.dao.ext.FileDao;
-import com.honjal.honjal.model.ContentDTO;
-import com.honjal.honjal.model.ContentFilesDTO;
+import com.honjal.honjal.dao.ext.ContentGoodDao;
+import com.honjal.honjal.model.BestContentVO;
 import com.honjal.honjal.model.ContentListDTO;
 import com.honjal.honjal.model.ContentVO;
-import com.honjal.honjal.model.FileDTO;
+import com.honjal.honjal.model.GoodVO;
+import com.honjal.honjal.model.PageDTO;
 import com.honjal.honjal.service.ContentService;
-import com.honjal.honjal.service.FileService;
+import com.honjal.honjal.service.PageService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service("contentServiceV1")
 public class ContentServiceImplV1 implements ContentService {
 
 	protected final ContentDao contentDao;
-	protected final SqlSession sqlSession;
-	protected final FileDao fDao;
-	
-	@Qualifier("fileServiceV2")
-	protected final FileService fService;
+	protected final ContentGoodDao contentGoodDao;
+	protected final PageService pageService;
 	
 	@Override
 	public ContentVO findByIdContent(Integer content_num) {
@@ -58,122 +54,71 @@ public class ContentServiceImplV1 implements ContentService {
 	}
 	
 	@Override
-	public List<ContentListDTO> allContent() {
-		List<ContentListDTO> list = contentDao.allContent();
-		return list;
-	}
-
-	@Override
-	public List<ContentListDTO> menuContent(String board_code) {
-		List<ContentListDTO> contentList = contentDao.menuContent(board_code);
-		return contentList;
-	}
-	
-	@Override
-	public List<ContentListDTO> menuContentPage(String board_code, int pageNum) {
-		List<ContentListDTO> contentList = contentDao.menuContent(board_code);
-		int total = contentList.size();
-		int start = (pageNum-1) * 10;
-		int end = pageNum * 10;
+	public List<ContentListDTO> contentMenuAllPage(String menu, int intPageNum, Model model) {
 		
-		List<ContentListDTO> pageList = new ArrayList<ContentListDTO>();
+		List<ContentListDTO> contentAll = contentDao.contentMenuAllPage(menu);
+		// 메뉴별 전체글담기
+		int totalContents = contentAll.size();
 		
-		for (int i = start; i < end; i++) {
-			pageList.add(contentList.get(i));
+		PageDTO pageDTO = pageService.makePagination(totalContents, intPageNum);
+		
+		List<ContentListDTO> pageList = new ArrayList<>();
+		// 이 페이지에 보여줄 글리스트
+		for(int i = pageDTO.getOffset(); i<pageDTO.getLimit(); i++) {
+			pageList.add(contentAll.get(i));
 		}
 		
+		model.addAttribute("PAGE_NAV", pageDTO);
+		model.addAttribute("CONTENTS", pageList);
 		
-		
-		return pageList;
-	}
-
-	@Override
-	public List<ContentListDTO> searchTitleContent(String menu, String search_word) {
-		List<ContentListDTO> list = contentDao.searchTitleContent(menu, search_word);
-		return list;
-	}
-
-	@Override
-	public List<ContentListDTO> searchTextContent(String text) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ContentListDTO> searchNameContent(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ContentListDTO> MyContent(Integer member_num) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public List<ContentFilesDTO> findByIdGalleryFiles(Long g_seq) {
-		// TODO Auto-generated method stub
-		return null;
+	public int checkGood(GoodVO goodVO) {
+		return contentGoodDao.checkGood(goodVO);
 	}
 
 	@Override
-	public ContentFilesDTO findByIdGallery(Long g_seq) {
-		// TODO Auto-generated method stub
-		return null;
+	public void insertGood(GoodVO goodVO) {
+		contentGoodDao.insertGood(goodVO);
+		contentGoodDao.insertUpGood(goodVO);
+		return;
 	}
 
 	@Override
-	public void input(ContentDTO contentDTO, MultipartFile one_file, MultipartHttpServletRequest m_file)
-			throws Exception {
-		// TODO Auto-generated method stub
-		String strUUID = fService.fileUp(one_file);
-		contentDTO.setFile_image(strUUID);
-		log.debug(" INSERT 전 seq {}", contentDTO.getContent_num());
-		contentDao.insert(contentDTO);
-		log.debug(" INSERT 후 seq {}", contentDTO.getContent_num());
-		Long content_num=contentDTO.getContent_num();
-		List<FileDTO> files = new ArrayList<FileDTO>();
-		List<MultipartFile>mFiles=m_file.getFiles("m_file");
-		for(MultipartFile file : mFiles) {
-			String fileOriginName = file.getOriginalFilename();
-			String fileUUName = fService.fileUp(file);
-			FileDTO fDTO = FileDTO.builder()
-							.content_num(content_num)
-							.file_original(fileOriginName)
-							.file_upname(fileUUName)
-							.build();
-			files.add(fDTO);
-		}
-		fDao.insertOrUpdateWithList(files);
+	public void deleteGood(GoodVO goodVO) {
+		contentGoodDao.deleteGood(goodVO);
+		contentGoodDao.deleteUpGood(goodVO);
+		return;
+	}
+
+//	@Override
+//	public int getGood(Integer content_num) {
+//		int good = contentGoodDao.getGood(content_num);
+//		return good;
+//	}
+
+	@Override
+	public List<BestContentVO> bestContent() {
+		List<BestContentVO> bList = contentDao.bestContent();
+		return bList;
 	}
 	
-	// 조회수
-		@Override
-		public void view_count(int board_code) throws Exception {
-			// TODO Auto-generated method stub
-			 sqlSession.selectOne("board.detail",board_code);
-			return;
-
-
-			
-			
-			
-		}
-		
-		// 제목옆댓글수
-		@Override
-		public void comment_count(int content_view) throws Exception {
-			
-		}
-
-		@Override
-		public void boardHitsUpdate(int content_num) {
-			// TODO Auto-generated method stub
-			sqlSession.update("viewCount", content_num);
-
-		
-		}
-
+	public List<ContentListDTO> infoContent() {
+		List<ContentListDTO> iList = contentDao.contentMenuAllPage("INF");
+		Collections.shuffle(iList);
+		return iList;
+	}
+	
+	
+	@Override
+	public int view_count(ContentVO contentVO) {
+		// TODO Auto-generated method stub
+		contentDao.view_count(contentVO);
+		return 0;
+	}
+	
+	
 
 }
